@@ -24,6 +24,7 @@
     "babel-loader": "^8.1.0",
     "casual": "^1.6.2",
     "mysql": "^2.18.1",
+    "pluralize": "^8.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "webpack": "^4.43.0",

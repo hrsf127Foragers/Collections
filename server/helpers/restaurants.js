@@ -1,4 +1,5 @@
 const data = require('./seedData.js');
+const models = require('../../database/models.js');
 
 const getRestaurants = () => {
   let results = [];
@@ -13,7 +14,7 @@ const getRestaurants = () => {
 // Assign restaurants var to randomly generated list of 100 restaurants
 const restaurants = getRestaurants();
 
-console.log('Logging restaurants => ', restaurants.length);
+// console.log('Logging restaurants => ', restaurants);
 
 // Iterate over restaurants and generate 2 to 10 collections
 // Collection function takes food type and city of each restaurant into account and generates a random name using those fields
@@ -72,9 +73,16 @@ const addRestaurantsToCollections = (colls) => {
 
 addRestaurantsToCollections(collections);
 
-console.log('Logging collections after restaurant additions => ', collections[0].name, collections[0].restaurants[1]);
+// console.log('Logging collections after restaurant additions => ', collections);
 
 // Now we have a big array of collections, and each collection has a big array of restaurants
+
+
+
+
+
+
+
 
 
 // QUERY ORDER

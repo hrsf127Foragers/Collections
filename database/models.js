@@ -1,11 +1,5 @@
 const db = require('./connect.js');
 
-// Create three query functions for now
-// 1. Inserts restaurant info into restaurants table
-// 2. Inserts collection info into collections table
-// 3. Inserts restaurant IDs and collection IDs into join table
-// Both take in a callback, and pass back results (which will have insert ids), relevant for join table
-
 const insertRestaurant = (restaurant, callback) => {
   let restQuery = 'INSERT INTO restaurants VALUES(0, ?, ?, ?, ?, ?, ?, NULL, ?)';
   let restArgs = [restaurant.name, restaurant.type, restaurant.rating, restaurant.num_reviews, restaurant.city, restaurant.price_range];
