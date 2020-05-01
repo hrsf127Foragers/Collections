@@ -7,29 +7,75 @@ const getRestaurants = () => {
     results.push(data.generateRestaurant());
   }
 
-  console.log('Logging results => ', results);
+  return results;
 };
 
-getRestaurants();
+// Assign restaurants var to randomly generated list of 100 restaurants
+const restaurants = getRestaurants();
 
-// For each restaurant, generate 2 to 10 collections (max num that shows up on a page is 10)
-// Random int between 1 and 3
-// If 1, collection will be named after a city
-// If 2, collection will be named after the type of food that the current restaurant has
-// If 3, collection will be named after a randomly generated adjective from adjectives list
+console.log('Logging restaurants => ', restaurants.length);
 
-// Once every restaurant has a collection, need to add new restaurants to each collection
-// Iterate over each collection, and generate 10 to 50 new restaurants
-// Add each restaurant to the restaurants array
-// Also, store each restaurant in a collection in that collection's 'restaurants' property --> this will come in handy when making queries to insert info into the db
+// Iterate over restaurants and generate 2 to 10 collections
+// Collection function takes food type and city of each restaurant into account and generates a random name using those fields
+const getCollections = (items) => {
+  let collections = [];
 
-// WHEN GENERATING RESTAURANTS FOR COLLECTIONS:
-//  Take into account whether the collection has a city name or food type
-//  If it does, all restaurants generated need to be in that city or of that food type
+  items.forEach(item => {
+    // Generate a random num of collections between 2 and 10
 
-// Now we should have:
-//  1. An array of restaurants (First 100 of which we'll build pages for)
-//  2. An array of collections, which includes an array of restaurants in that collection as a property of the collection
+    // Also generate a 1 or 2 to determine how collection name will be formatted
+    // 1: Combine adjective, foodType, and city - ex: 'Tasty Mexican in San Francisco'
+    // 2: Combine adjective, 'eats', and city - ex: 'Hip eats in Seattle'
+    // --> Trying to keep unique combos, but if two overlap they'll be handled in the database entries
+    let numberCollections = data.randomNumberGenerator(2, 11);
+
+    for (let i = 0; i < numberCollections; i++) {
+      let oneOrTwo = data.randomNumberGenerator(1, 3);
+      if (oneOrTwo === 1) {
+        collections.push(data.generateCollection(item))
+      } else {
+        collections.push(data.generateCollection(item, 'eats'))
+      }
+    }
+  });
+
+  return collections;
+}
+
+const collections = getCollections(restaurants);
+
+console.log('Logging collections => ', collections);
+
+// Now, for each collection, create 10 to 50 restaurants
+// Rules:
+//  Restaurants generated must have the city, and, if a type of food is specified in the collection, the type of food of the collection
+const addRestaurantsToCollections = (colls) => {
+  // Iterate over collections
+  // Generate 10 to 50 rest
+  // Add to restaurants property on collection
+  colls.forEach(coll => {
+    let numRestaurants = data.randomNumberGenerator(10, 51);
+
+    if (coll.type === 'eats') {
+      for (let i = 0; i < numRestaurants; i++) {
+        coll.restaurants.push(data.generateRestaurant(null, coll.city));
+      }
+    } else {
+      for (let i = 0; i < numRestaurants; i++) {
+        coll.restaurants.push(data.generateRestaurant(coll.type, coll.city));
+      }
+    }
+
+  });
+
+}
+
+addRestaurantsToCollections(collections);
+
+console.log('Logging collections after restaurant additions => ', collections[0].name, collections[0].restaurants[1]);
+
+// Now we have a big array of collections, and each collection has a big array of restaurants
+
 
 // QUERY ORDER
 //  1. Insert each restaurant into the restaurants table
