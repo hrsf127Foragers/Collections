@@ -43,10 +43,9 @@ const insertPairing = (restID, collID, callback) => {
 // Retrieve all restaurants in a given collection
 const retrieveRestaurants = (collID, callback) => {
   // Retrieve collection id
-  let collIdQuery = 'SELECT restaurant_id FROM restaurants_collections WHERE collection_id = ?';
-  let collIdArgs = [collID];
+  let collIdQuery = `SELECT restaurant_id FROM restaurants_collections WHERE collection_id = ${collID}`;
 
-  db.connection.query(collIdQuery, collIdArgs, (err, results) => {
+  db.connection.query(collIdQuery, (err, results) => {
     if (err) {
       callback(err);
     }
@@ -74,8 +73,10 @@ const retrieveRestaurants = (collID, callback) => {
   });
 };
 
-module.exports.insertRestaurant = insertRestaurant;
-module.exports.insertCollection = insertCollection;
-module.exports.insertPairing = insertPairing;
-module.exports.retrieveRestaurants = retrieveRestaurants;
+module.exports = {
+  insertRestaurant,
+  insertCollection,
+  insertPairing,
+  retrieveRestaurants
+};
 
