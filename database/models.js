@@ -40,8 +40,42 @@ const insertPairing = (restID, collID, callback) => {
   });
 };
 
+// Retrieve all restaurants in a given collection
+const retrieveRestaurants = (collID, callback) => {
+  // Retrieve collection id
+  let collIdQuery = 'SELECT restaurant_id FROM restaurants_collections WHERE collection_id = ?';
+  let collIdArgs = [collID];
+
+  db.connection.query(collIdQuery, collIdArgs, (err, results) => {
+    if (err) {
+      callback(err);
+    }
+    // Results are an array of objects with restaurant_ids of restaurants that are part of input collection
+    const restIDs = results;
+
+    // Storage for restaurant details, will callback with this array when each restaurant has been pulled from the restaurants table
+    const restaurantDetails = [];
+    restIDs.forEach(restID => {
+      let restQuery = 'SELECT * FROM restaurants WHERE id = ?';
+      let restArgs = [restID.restaurant_id];
+      db.connection.query(restQuery, restArgs, (err, details) => {
+        if (err) {
+          console.log('Logging error from select query => ', err);
+          callback(err);
+        }
+        console.log('Logging return details from select => ', details);
+        restaurantDetails.push(details[0]);
+        // Once restaurantDetails is the same length as the return array of restaurant IDs that we were iterating through, we know we've gotten the details for every restaurant and can pass those details to our callback
+        if (restaurantDetails.length === restIDs.length) {
+          callback(null, restaurantDetails);
+        }
+      });
+    });
+  });
+};
+
 module.exports.insertRestaurant = insertRestaurant;
 module.exports.insertCollection = insertCollection;
 module.exports.insertPairing = insertPairing;
-
+module.exports.retrieveRestaurants = retrieveRestaurants;
 
