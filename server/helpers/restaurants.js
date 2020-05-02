@@ -29,6 +29,7 @@ const getCollections = (items) => {
     // 2: Combine adjective, 'eats', and city - ex: 'Hip eats in Seattle'
     // --> Trying to keep unique combos, but if two overlap they'll be handled in the database entries
     let numberCollections = data.randomNumberGenerator(2, 11);
+    item.collectionCount = numberCollections;
 
     for (let i = 0; i < numberCollections; i++) {
       let oneOrTwo = data.randomNumberGenerator(1, 3);
@@ -41,90 +42,118 @@ const getCollections = (items) => {
   });
 
   return collections;
-}
+};
 
 const collections = getCollections(restaurants);
 
-console.log('Logging collections => ', collections);
+// Add all restaurants
+restaurants.forEach(restaurant => {
+  models.insertRestaurant(restaurant, (err, results) => {
+    if (err) {
+      throw 'Error inserting restaurant into db';
+    }
+  });
+});
 
-// Now, for each collection, create 10 to 50 restaurants
-// Rules:
-//  Restaurants generated must have the city, and, if a type of food is specified in the collection, the type of food of the collection
+// Add all collections
+collections.forEach(collection => {
+  models.insertCollection(collection, (err, results) => {
+    if (err) {
+      throw 'Error inserting collection into db';
+    }
+  });
+});
+
+// Add all combos
+
+const addPairingsForRestaurants = (restaurantList) => {
+  let collectionCounter = 1;
+
+  restaurantList.forEach((restaurant, i) => {
+    let restaurantID = i + 1;
+
+    for (var j = collectionCounter; j < collectionCounter + restaurant.collectionCount; j++) {
+      models.insertPairing(restaurantID, j, (err, result) => {
+        if (err) {
+          throw 'Error inserting pairing into db';
+        }
+      });
+    }
+
+    collectionCounter = j;
+  });
+
+};
+
+addPairingsForRestaurants(restaurants);
+
+// We have our first 100 restaurants, collections for each of those, and the combos
+
+// Generate 10 to 50 restaurants for each collection
+// Add the number of restaurants to each collection's 'restaurantCount' property
+
+// Secondary restaurants are restaurants that we won't have individual pages for (collections --> secondary restaurants is a one-to-many relationship)
 const addRestaurantsToCollections = (colls) => {
-  // Iterate over collections
-  // Generate 10 to 50 rest
-  // Add to restaurants property on collection
+  let secondaryRestaurants = [];
+
   colls.forEach(coll => {
     let numRestaurants = data.randomNumberGenerator(10, 51);
+    coll.restaurantCount = numRestaurants;
 
     if (coll.type === 'eats') {
       for (let i = 0; i < numRestaurants; i++) {
-        coll.restaurants.push(data.generateRestaurant(null, coll.city));
+        secondaryRestaurants.push(data.generateRestaurant(null, coll.city));
       }
     } else {
       for (let i = 0; i < numRestaurants; i++) {
-        coll.restaurants.push(data.generateRestaurant(coll.type, coll.city));
+        secondaryRestaurants.push(data.generateRestaurant(coll.type, coll.city));
       }
     }
-
   });
 
-}
+  return secondaryRestaurants;
+};
 
-addRestaurantsToCollections(collections);
+const secondaryRestaurants = addRestaurantsToCollections(collections);
 
-// console.log('Logging collections after restaurant additions => ', collections);
+// Add each secondary restaurant to restaurants table
+secondaryRestaurants.forEach(secRes => {
+  models.insertRestaurant(secRes, (err, results) => {
+    if (err) {
+      throw 'Error inserting restaurant into db';
+    }
+  });
+});
 
-// Now we have a big array of collections, and each collection has a big array of restaurants
-
-
-
-
-
-
-
-
-
-// QUERY ORDER
-//  1. Insert each restaurant into the restaurants table
-//  2. Insert each collection into the collections table
-//     When each collection has been inserted, results will return an obj with the insertion id
-//     Iterate over restaurants in that collection's restaurants array
-//     Find the id of each restaurant in the restaurants table, and add that restaurant id alongside the collection's id in the join table
+// Now, iterate over collections again, accessing the number of secondary restaurants that should be linked to a collection in the join table for each collection
+// This number lies on collection.restaurantCount
+// Insert each restaurant_collection pairing, starting at restaurant_id 101 and collection_id 1 (restaurant_ids 1 through 100 are primary restaurants and have already been added)
+// For example, if collection 1 has 20 restaurants, pairings should start as such:
 /*
-                restaurant_id  |  collections_id
-                    1                   1
-                    9                   1
-                    15                  1
-                    23                  1
-                    1                   2
-                    3                   2
-                    16                  2
-                    28                  2
+    restaurant_id  |  collection_id
+        101                 1
+        102                 1
+        103                 1
+        ...                ...
+        120                 1
+        121                 2
 */
+const addPairingsForCollections = (collectionList) => {
+  let restaurantCounter = 101;
 
+  collectionList.forEach((collection, i) => {
+    let collectionID = i + 1;
 
-// Collections
-//  Id
-//  Name --> cities or food types
-//  User (creator) --> add last names table
-//  Followers --> Random number between 1 and 1000
-//  User followers --> Random number between 1 and 1000
-//  User ratings_num --> Random number between 1 and 1000
-//  Latest update --> Random date in last 3 years
-//  User image
+    for (var j = restaurantCounter; j < restaurantCounter + collection.restaurantCount; j++) {
+      models.insertPairing(j, collectionID, (err, result) => {
+        if (err) {
+          throw 'Error inserting pairing into db';
+        }
+      });
+    }
 
-// generate Collection
-// generate random collection name
-//    Random name will be generated by selecting a 1 or 2 randomly
-//    If a 1, pick a random food type
-// generate 10 to 30 random restaurants
-// use randomNumber generator to generate number of restaurants between 10 and 30
-// Iterate from 1 to (10 < x < 30) and
+    restaurantCounter = j;
+  });
+};
 
-// Question: how do we make sure that every restaurant we generate in our restaurants table is included in a collection that we generate?
-
-
-// GETTING COLLECTIONS FOR A GIVEN RESTAURANT
-// When a restaurant page is loaded, should lookup id of that restaurant in restaurants table
-// Then, should use that restaurant id to look up ids of all collections that include that restaurant in restaurants_collections join table
+addPairingsForCollections(collections);

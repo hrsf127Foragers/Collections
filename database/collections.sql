@@ -1,4 +1,5 @@
-CREATE DATABASE IF NOT EXISTS yelp;
+DROP DATABASE IF EXISTS yelp;
+CREATE DATABASE yelp;
 
 USE yelp;
 
@@ -19,7 +20,7 @@ CREATE TABLE IF NOT EXISTS collections (
   coll_name VARCHAR(255),
   user_creator VARCHAR(255),
   coll_followers INT(11),
-  last_update DATE,
+  last_update TEXT,
   user_followers INT(11),
   user_ratings INT(11),
   user_img_url VARCHAR(255),

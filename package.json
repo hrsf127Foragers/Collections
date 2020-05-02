@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "react-dev": "webpack -d --watch",
-    "rest-database": "node server/helpers/restaurants.js"
+    "populate-db": "node server/helpers/restaurants.js",
+    "run-db": "mysql -u root < database/collections.sql"
   },
   "repository": {
     "type": "git",

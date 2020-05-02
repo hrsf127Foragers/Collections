@@ -1,12 +1,12 @@
 const db = require('mysql');
 
 const connection = db.createConnection({
-  username: 'root',
+  user: 'root',
   password: '',
   database: 'yelp'
 });
 
 connection.connect();
 
-module.exports.connection;
+module.exports.connection = connection;
 
