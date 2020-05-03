@@ -22,6 +22,7 @@ module.exports = {
     let randomCity = city || casual.city;
     let randomNumReviews = this.randomNumberGenerator(10, 101);
     let randomPrice = this.randomNumberGenerator(1, 4);
+    let randomImg = 'https://loremflickr.com/90/90/food';
 
     return {
       name: `${randomName}'s ${randomFoodType} ${randomStoreType}`,
@@ -29,7 +30,8 @@ module.exports = {
       rating: randomRating.toFixed(1),
       num_reviews: randomNumReviews,
       city: randomCity,
-      price_range: randomPrice
+      price_range: randomPrice,
+      image: randomImg
     };
   },
   // Create collection-generating function
@@ -41,6 +43,7 @@ module.exports = {
     let randomDate = casual.date(format = 'MMMM Do YYYY');
     let userFollowers = this.randomNumberGenerator(0, 1000);
     let userRatings = this.randomNumberGenerator(0, 1000);
+    let randomImg = 'https://loremflickr.com/218/218/food';
 
     return {
       name: `${randomAdjective} ${foodType} in ${restaurant.city}`,
@@ -51,7 +54,7 @@ module.exports = {
       user_ratings: userRatings,
       city: restaurant.city,
       type: foodType,
-      restaurants: [restaurant]
+      image: randomImg
     };
   }
 };
