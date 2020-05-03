@@ -18,3 +18,52 @@
     }
 */
 // Pass the whole array to props of collectionList
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import $ from 'jquery';
+import CollectionList from './CollectionList.jsx';
+
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      restaurantID: this.props.restID,
+      collectionList: []
+    };
+
+  };
+
+  componentDidMount() {
+    this.getCollections();
+  }
+
+  getCollections() {
+    console.log('About to send request');
+    $.ajax({
+      method: 'GET',
+      url: `http://localhost:4568/23/collections`,
+      success: (data) => {
+        console.log('Logging data from server => ', data);
+        this.setState({
+          collectionList: data
+        });
+      },
+      error: () => {
+        console.log('Error fetching data from server');
+      }
+    });
+  }
+
+  render() {
+    return (
+      <div className="collections">
+        <h1>Collections</h1>
+        <CollectionList collection={this.state.collectionList} />
+      </div>
+    );
+  }
+};
+
+export default App;
