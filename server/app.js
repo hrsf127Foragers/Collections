@@ -10,7 +10,7 @@ const models = require('../database/models.js');
 
 app.listen(port, () => {console.log(`Server is listening on port ${port}`)});
 
-app.get('/:restaurant_id/:collection_id', (req, res) => {
+app.get('/:collection_id/restaurants', (req, res) => {
   models.retrieveRestaurants(req.params.collection_id, (err, results) => {
     if (err) {
       res.status(404).end();
@@ -19,7 +19,7 @@ app.get('/:restaurant_id/:collection_id', (req, res) => {
   });
 });
 
-app.get('/:restaurant_id', (req, res) => {
+app.get('/:restaurant_id/collections', (req, res) => {
   models.retrieveCollections(req.params.restaurant_id, (err, results) => {
     if (err) {
       res.status(404).end();
