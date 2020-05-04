@@ -23,6 +23,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import CollectionList from './CollectionList.jsx';
+import styled from 'styled-components';
+
+const Title = styled.h1`
+  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2b273c;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -43,7 +51,7 @@ class App extends React.Component {
     console.log('About to send request');
     $.ajax({
       method: 'GET',
-      url: `http://localhost:4568/23/collections`,
+      url: `http://localhost:4568/${this.state.restaurantID}/collections`,
       success: (data) => {
         console.log('Logging data from server => ', data);
         this.setState({
@@ -59,7 +67,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="collections">
-        <h1>Collections</h1>
+        <Title>Collections Including Taco Boys</Title>
         <CollectionList collection={this.state.collectionList} />
       </div>
     );
