@@ -103,12 +103,22 @@ const retrieveCollections = (restaurantID, callback) => {
   });
 };
 
+const getRestaurantName = (restaurantID, callback) => {
+  db.connection.query(`SELECT rest_name FROM restaurants WHERE id = ${restaurantID}`, (err, results) => {
+    if (err) {
+      callback(err);
+    }
+    callback(null, results[0]);
+  });
+};
+
 
 module.exports = {
   insertRestaurant,
   insertCollection,
   insertPairing,
   retrieveRestaurants,
-  retrieveCollections
+  retrieveCollections,
+  getRestaurantName
 };
 

@@ -38,6 +38,7 @@ class App extends React.Component {
 
     this.state = {
       restaurantID: this.props.restID,
+      restaurantName: null,
       collectionList: []
     };
 
@@ -48,14 +49,14 @@ class App extends React.Component {
   }
 
   getCollections() {
-    console.log('About to send request');
     $.ajax({
       method: 'GET',
       url: `http://localhost:4568/${this.state.restaurantID}/collections`,
       success: (data) => {
         console.log('Logging data from server => ', data);
         this.setState({
-          collectionList: data
+          restaurantName: data[data.length - 1],
+          collectionList: data.slice(0, data.length - 1)
         });
       },
       error: () => {
@@ -67,7 +68,7 @@ class App extends React.Component {
   render() {
     return (
       <div className="collections">
-        <Title>Collections Including Taco Boys</Title>
+        <Title>Collections Including {this.state.restaurantName}</Title>
         <CollectionList collection={this.state.collectionList} />
       </div>
     );
