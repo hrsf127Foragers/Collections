@@ -32,6 +32,13 @@ const Title = styled.h1`
   color: #2b273c;
 `;
 
+const CollectionDiv = styled.div`
+  width: 1144px;
+  height: 330px;
+  padding-bottom: 48px;
+  margin: 0px auto 48px auto;
+`;
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -67,10 +74,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="collections">
+      <CollectionDiv>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList collection={this.state.collectionList} />
-      </div>
+        <CollectionList collectionList={this.state.collectionList} />
+      </CollectionDiv>
     );
   }
 };
