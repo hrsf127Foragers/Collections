@@ -6,9 +6,8 @@ restaurant in San Francisco might find itself a part of the following two collec
 The 'Mexican' collection might be a list of the creator's favorite Mexican restaurants in the area, while the
 San Francisco collection might include that creator's favorite restaurants, of any cuisine type, in San Francisco.
 This repository serves to replicate the layout of that collections feature, including its appearance on a given
-restaurant's Yelp page, the appearance of the list of other restaurants in a given collection when that collection
-is selected, and a map that pinpoints the locations of each restaurant in a collection, utilizing the Google Maps API
-to retrieve relevant data. This repository uses React to build out the front-end, Node.js and Express on the back-end,
+restaurant's Yelp page, and the appearance of a list of other restaurants in a given collection when that collection
+is selected. This repository uses React to build out the front-end, Node.js and Express on the back-end,
 and MySQL to store relevant data.
 
 ## Related Projects
