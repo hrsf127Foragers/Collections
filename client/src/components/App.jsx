@@ -20,9 +20,22 @@
 // Pass the whole array to props of collectionList
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import CollectionList from './CollectionList.jsx';
+import styled from 'styled-components';
+
+const Title = styled.h1`
+  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #2b273c;
+`;
+
+const Main = styled.div`
+  width: 1144px;
+  height: 330px;
+  margin: auto;
+`;
 
 class App extends React.Component {
   constructor(props) {
@@ -30,6 +43,7 @@ class App extends React.Component {
 
     this.state = {
       restaurantID: this.props.restID,
+      restaurantName: null,
       collectionList: []
     };
 
@@ -40,14 +54,14 @@ class App extends React.Component {
   }
 
   getCollections() {
-    console.log('About to send request');
     $.ajax({
       method: 'GET',
-      url: `http://localhost:4568/23/collections`,
+      url: `http://localhost:4568/${this.state.restaurantID}/collections`,
       success: (data) => {
         console.log('Logging data from server => ', data);
         this.setState({
-          collectionList: data
+          restaurantName: data[data.length - 1],
+          collectionList: data.slice(0, data.length - 1)
         });
       },
       error: () => {
@@ -58,10 +72,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="collections">
-        <h1>Collections</h1>
-        <CollectionList collection={this.state.collectionList} />
-      </div>
+      <Main>
+        <Title>Collections Including {this.state.restaurantName}</Title>
+        <CollectionList collectionList={this.state.collectionList} />
+      </Main>
     );
   }
 };

@@ -43,7 +43,9 @@ module.exports = {
     let randomDate = casual.date(format = 'MMMM Do YYYY');
     let userFollowers = this.randomNumberGenerator(0, 1000);
     let userRatings = this.randomNumberGenerator(0, 1000);
-    let randomImg = 'https://loremflickr.com/218/218/food';
+    let userImg = 'https://loremflickr.com/30/30/person?random=1';
+    let coverImg = 'https://loremflickr.com/218/218/food?random=1';
+    let numRestaurants = this.randomNumberGenerator(10, 51);
 
     return {
       name: `${randomAdjective} ${foodType} in ${restaurant.city}`,
@@ -54,7 +56,9 @@ module.exports = {
       user_ratings: userRatings,
       city: restaurant.city,
       type: foodType,
-      image: randomImg
+      userImage: userImg,
+      coverImage: coverImg,
+      restCount: numRestaurants
     };
   }
 };
