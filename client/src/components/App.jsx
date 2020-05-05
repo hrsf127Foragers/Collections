@@ -49,6 +49,8 @@ class App extends React.Component {
       collectionStart: 0
     };
 
+    this.getNextFiveCollections = this.getNextFiveCollections.bind(this);
+    this.getPreviousFiveCollections = this.getPreviousFiveCollections.bind(this);
   };
 
 
@@ -78,13 +80,27 @@ class App extends React.Component {
     });
   }
 
+  getNextFiveCollections() {
+    this.state.collectionStart += 5;
+    this.setState({
+      collectionStart: this.state.collectionStart
+    });
+  }
+
+  getPreviousFiveCollections() {
+    this.state.collectionStart -= 5;
+    this.setState({
+      collectionStart: this.state.collectionStart
+    });
+  }
+
   render() {
     const collectionChunk = this.state.collectionList.slice(this.state.collectionStart, this.state.collectionStart + 5);
 
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList collectionChunk={collectionChunk} index={this.state.collectionStart} state={this.state}/>
+        <CollectionList collectionChunk={collectionChunk} index={this.state.collectionStart} state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections}/>
       </Main>
     );
   }
