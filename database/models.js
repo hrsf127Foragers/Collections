@@ -1,8 +1,8 @@
 const db = require('./connect.js');
 
 const insertRestaurant = (restaurant, callback) => {
-  let restQuery = 'INSERT INTO restaurants VALUES(0, ?, ?, ?, ?, ?, NULL, ?)';
-  let restArgs = [restaurant.name, restaurant.type, restaurant.rating, restaurant.num_reviews, restaurant.city, restaurant.price_range];
+  let restQuery = 'INSERT INTO restaurants VALUES(0, ?, ?, ?, ?, ?, ?, ?)';
+  let restArgs = [restaurant.name, restaurant.type, restaurant.rating, restaurant.num_reviews, restaurant.city, restaurant.image, restaurant.price_range];
 
   db.connection.query(restQuery, restArgs, (err, results) => {
     if (err) {
@@ -15,8 +15,8 @@ const insertRestaurant = (restaurant, callback) => {
 
 // Insert a collection into the collections table
 const insertCollection = (collection, callback) => {
-  let connQuery = 'INSERT INTO collections (coll_name, user_creator, coll_followers, last_update, user_followers, user_ratings, user_img_url) VALUES(?, ?, ?, ?, ?, ?, NULL)';
-  let connArgs = [collection.name, collection.creator, collection.coll_followers, collection.last_update, collection.user_followers, collection.user_ratings];
+  let connQuery = 'INSERT INTO collections (coll_name, user_creator, coll_followers, last_update, user_followers, user_ratings, user_img_url) VALUES(?, ?, ?, ?, ?, ?, ?)';
+  let connArgs = [collection.name, collection.creator, collection.coll_followers, collection.last_update, collection.user_followers, collection.user_ratings, collection.image];
 
   db.connection.query(connQuery, connArgs, (err, results) => {
     if (err) {
@@ -73,10 +73,42 @@ const retrieveRestaurants = (collID, callback) => {
   });
 };
 
+// Retrieve all collections for a given restaurant
+// We have a restaurant ID
+// We need to make a select query on the join table for all collections linked to that restaurant ID
+// Then, pull info of all collections from the collections table
+const retrieveCollections = (restaurantID, callback) => {
+  let getCollectionIDsQuery = `SELECT collection_id FROM restaurants_collections WHERE restaurant_id = ${restaurantID}`;
+
+  db.connection.query(getCollectionIDsQuery, (err, results) => {
+    if (err) {
+      callback(err);
+    }
+    // Now we have all the collection IDs, iterate through them and get more details for each from collections table
+    // [{id: 1}, {id: 2}, etc.]
+    let collectionDetails = [];
+
+    results.forEach(result => {
+      let getCollectionDetailsQuery = `SELECT * FROM collections WHERE id = ${result.collection_id}`;
+      db.connection.query(getCollectionDetailsQuery, (err, results2) => {
+        if (err) {
+          callback(err);
+        }
+        collectionDetails.push(results2[0]);
+        if (collectionDetails.length === results.length) {
+          callback(null, collectionDetails);
+        }
+      });
+    });
+  });
+};
+
+
 module.exports = {
   insertRestaurant,
   insertCollection,
   insertPairing,
-  retrieveRestaurants
+  retrieveRestaurants,
+  retrieveCollections
 };
 
