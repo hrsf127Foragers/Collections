@@ -20,7 +20,6 @@
 // Pass the whole array to props of collectionList
 
 import React from 'react';
-import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import CollectionList from './CollectionList.jsx';
 import styled from 'styled-components';
@@ -32,11 +31,10 @@ const Title = styled.h1`
   color: #2b273c;
 `;
 
-const CollectionDiv = styled.div`
+const Main = styled.div`
   width: 1144px;
   height: 330px;
-  padding-bottom: 48px;
-  margin: 0px auto 48px auto;
+  margin: auto;
 `;
 
 class App extends React.Component {
@@ -74,10 +72,10 @@ class App extends React.Component {
 
   render() {
     return (
-      <CollectionDiv>
+      <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
         <CollectionList collectionList={this.state.collectionList} />
-      </CollectionDiv>
+      </Main>
     );
   }
 };
