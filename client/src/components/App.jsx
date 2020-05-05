@@ -25,10 +25,11 @@ import CollectionList from './CollectionList.jsx';
 import styled from 'styled-components';
 
 const Title = styled.h1`
-  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #2b273c;
+  margin-bottom: 24px;
 `;
 
 const Main = styled.div`
@@ -44,10 +45,17 @@ class App extends React.Component {
     this.state = {
       restaurantID: this.props.restID,
       restaurantName: null,
-      collectionList: []
+      collectionList: [],
+      collectionStart: 0
     };
 
   };
+
+
+  // New addition to state - active (displayed) collections, 5 at a time
+  // Initial state will be 0
+  // Pressing the arrow button (TBD) will increase state by 5
+  // When rendering collections, collectionList will only be passed slice from current state index to current state index + 5
 
   componentDidMount() {
     this.getCollections();
@@ -71,10 +79,12 @@ class App extends React.Component {
   }
 
   render() {
+    const collectionChunk = this.state.collectionList.slice(this.state.collectionStart, this.state.collectionStart + 5);
+
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList collectionList={this.state.collectionList} />
+        <CollectionList collectionList={collectionChunk} />
       </Main>
     );
   }

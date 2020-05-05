@@ -8,6 +8,8 @@ const CollectionTitle = styled.p`
   font-weight: ${props => props.secondary ? '400' : '700'};
   color: ${props => props.secondary ? '#757280' : '#2b273c'};
   margin: 0px;
+  width: 218px;
+  line-height: 22px;
 `;
 
 const Collection = styled.div`
@@ -32,6 +34,7 @@ const ImageContainer = styled.div`
 const CoverPhoto = styled.img`
   border-radius: 4px;
   grid-area: cover;
+
 `;
 
 const PhotoOverlay = styled.p`
@@ -70,18 +73,25 @@ const BookmarkIcon = styled(Bookmark)`
   justify-self: end;
 `;
 
-const CollectionItem = (props) => (
-  <Collection>
-    <ImageContainer>
-      <CoverPhoto src={`${props.collection.coll_img_url}?random=${props.i}`} />
-      <PhotoOverlay>
-        <CollectionDetails>{props.collection.rest_count}</CollectionDetails>
-        <BookmarkIcon></BookmarkIcon>
-      </PhotoOverlay>
-    </ImageContainer>
-    <CollectionTitle>{props.collection.coll_name}</CollectionTitle>
-    <CollectionTitle secondary>By {props.collection.user_creator}</CollectionTitle>
-  </Collection>
-);
+const CollectionItem = (props) => {
+  const nameSplit = props.collection.user_creator.split(' ');
+  const lastInitial = nameSplit[nameSplit.length-1].slice(0, 1);
+  nameSplit[nameSplit.length-1] = lastInitial + '.';
+  const nameJoin = nameSplit.join(' ');
+
+  return (
+    <Collection>
+      <ImageContainer>
+        <CoverPhoto src={`${props.collection.coll_img_url}?random=${props.i}`} />
+        <PhotoOverlay>
+          <CollectionDetails>{props.collection.rest_count}</CollectionDetails>
+          <BookmarkIcon></BookmarkIcon>
+        </PhotoOverlay>
+      </ImageContainer>
+      <CollectionTitle>{props.collection.coll_name}</CollectionTitle>
+      <CollectionTitle secondary>By {nameJoin}</CollectionTitle>
+    </Collection>
+  );
+};
 
 export default CollectionItem;
