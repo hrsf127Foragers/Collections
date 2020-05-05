@@ -84,7 +84,7 @@ class App extends React.Component {
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList collectionList={collectionChunk} />
+        <CollectionList collectionChunk={collectionChunk} index={this.state.collectionStart} state={this.state}/>
       </Main>
     );
   }
