@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/../client/public/dist'));
 app.get('/:collection_id/restaurants', (req, res) => {
   models.retrieveRestaurants(req.params.collection_id, (err, results) => {
     if (err) {
-      res.status(404).end();
+      res.status(500).end();
     }
     res.status(200).json(results);
   });
@@ -23,12 +23,12 @@ app.get('/:collection_id/restaurants', (req, res) => {
 app.get('/:restaurant_id/collections', (req, res) => {
   models.retrieveCollections(req.params.restaurant_id, (err, results) => {
     if (err) {
-      res.status(404).end();
+      res.status(500).end();
     }
 
     models.getRestaurantName(req.params.restaurant_id, (err, name) => {
       if (err) {
-        res.status(404).end();
+        res.status(500).end();
       }
       results.push(name.rest_name);
       res.status(200).json(results);

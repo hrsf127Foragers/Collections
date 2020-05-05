@@ -14,8 +14,6 @@ const getRestaurants = () => {
 // Assign restaurants var to randomly generated list of 100 restaurants
 const restaurants = getRestaurants();
 
-// console.log('Logging restaurants => ', restaurants);
-
 // Iterate over restaurants and generate 2 to 10 collections
 // Collection function takes food type and city of each restaurant into account and generates a random name using those fields
 const getCollections = (items) => {
@@ -87,25 +85,19 @@ const addPairingsForRestaurants = (restaurantList) => {
 
 addPairingsForRestaurants(restaurants);
 
-// We have our first 100 restaurants, collections for each of those, and the combos
-
-// Generate 10 to 50 restaurants for each collection
-// Add the number of restaurants to each collection's 'restaurantCount' property
-
 // Secondary restaurants are restaurants that we won't have individual pages for (collections --> secondary restaurants is a one-to-many relationship)
 const addRestaurantsToCollections = (colls) => {
   let secondaryRestaurants = [];
 
   colls.forEach(coll => {
-    let numRestaurants = data.randomNumberGenerator(10, 51);
-    coll.restaurantCount = numRestaurants;
+    let numRestaurants = coll.restCount;
 
     if (coll.type === 'eats') {
-      for (let i = 0; i < numRestaurants; i++) {
+      for (let i = 0; i < numRestaurants - 1; i++) {
         secondaryRestaurants.push(data.generateRestaurant(null, coll.city));
       }
     } else {
-      for (let i = 0; i < numRestaurants; i++) {
+      for (let i = 0; i < numRestaurants - 1; i++) {
         secondaryRestaurants.push(data.generateRestaurant(coll.type, coll.city));
       }
     }
@@ -144,7 +136,7 @@ const addPairingsForCollections = (collectionList) => {
   collectionList.forEach((collection, i) => {
     let collectionID = i + 1;
 
-    for (var j = restaurantCounter; j < restaurantCounter + collection.restaurantCount; j++) {
+    for (var j = restaurantCounter; j < restaurantCounter + (collection.restCount - 1); j++) {
       models.insertPairing(j, collectionID, (err, result) => {
         if (err) {
           throw 'Error inserting pairing into db';

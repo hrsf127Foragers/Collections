@@ -24,6 +24,8 @@ CREATE TABLE IF NOT EXISTS collections (
   user_followers INT(11),
   user_ratings INT(11),
   user_img_url VARCHAR(255),
+  coll_img_url VARCHAR(255),
+  rest_count INT(3),
   PRIMARY KEY (id)
 );
 
