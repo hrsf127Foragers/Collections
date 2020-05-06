@@ -1,27 +1,7 @@
-// App will be a stateful class component
-// Will have an initial state set to whatever restaurant id is passed from app
-// For now, will render a collectionList for the given restaurant ID
-// How do we get that collectionList?
-// Send a get request on componentDidMount to server
-// get request to url: 'http://localhost:4568/${this.state.id}/collections
-// When data is received, should have an array of collection objects in the following format:
-/*
-    {
-        "id": 113,
-        "coll_name": "Small Sandwiches in Bernhardberg",
-        "user_creator": "Francisca Mayer",
-        "coll_followers": 154,
-        "last_update": "August 5th 1994",
-        "user_followers": 728,
-        "user_ratings": 345,
-        "user_img_url": "https://loremflickr.com/218/218/food"
-    }
-*/
-// Pass the whole array to props of collectionList
-
 import React from 'react';
 import $ from 'jquery';
 import CollectionList from './CollectionList.jsx';
+import Modal from './Modal/Modal.jsx';
 import styled from 'styled-components';
 
 const Title = styled.h1`
@@ -39,6 +19,14 @@ const Main = styled.div`
   position: relative;
 `;
 
+// MODAL
+// State of app should have a display property set to a boolean, determining whether or not to show modal
+// Add a currentCollection property to state too - when a collection is selected in collectionItem, will set this state to the selected collection
+//  Also, collection Click handler should make a request for all restaurants in the selected collection from the database
+//  Those restaurants can be added to a current restaurants component in state, which will be passed to modal
+// Can just pass the state to modal when rendering
+//
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -47,7 +35,8 @@ class App extends React.Component {
       restaurantID: this.props.restID,
       restaurantName: null,
       collectionList: [],
-      stage: 0
+      stage: 0,
+      displayModal: true
     };
 
     this.getNextFiveCollections = this.getNextFiveCollections.bind(this);
@@ -94,6 +83,7 @@ class App extends React.Component {
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
         <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections}/>
+        <Modal state={this.state}/>
       </Main>
     );
   }
