@@ -33,9 +33,10 @@ const Title = styled.h1`
 `;
 
 const Main = styled.div`
-  width: 1144px;
-  height: 330px;
+  width: 1174px;
+  height: 360px;
   margin: auto;
+  position: relative;
 `;
 
 class App extends React.Component {
@@ -46,7 +47,7 @@ class App extends React.Component {
       restaurantID: this.props.restID,
       restaurantName: null,
       collectionList: [],
-      collectionStart: 0
+      stage: 0
     };
 
     this.getNextFiveCollections = this.getNextFiveCollections.bind(this);
@@ -76,26 +77,23 @@ class App extends React.Component {
   }
 
   getNextFiveCollections() {
-    this.state.collectionStart += 5;
     this.setState({
-      collectionStart: this.state.collectionStart
+      stage: 1
     });
   }
 
   getPreviousFiveCollections() {
-    this.state.collectionStart -= 5;
     this.setState({
-      collectionStart: this.state.collectionStart
+      stage: 2
     });
   }
 
   render() {
-    const collectionChunk = this.state.collectionList.slice(this.state.collectionStart, this.state.collectionStart + 5);
 
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList collectionChunk={collectionChunk} index={this.state.collectionStart} state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections}/>
+        <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections}/>
       </Main>
     );
   }

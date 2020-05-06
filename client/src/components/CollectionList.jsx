@@ -7,23 +7,37 @@ import styled from 'styled-components';
 import {KeyboardArrowRight} from '@styled-icons/material-sharp/KeyboardArrowRight';
 import {KeyboardArrowLeft} from '@styled-icons/material-sharp/KeyboardArrowLeft';
 import {keyframes} from 'styled-components';
-import Slider from 'react-styled-carousel';
+import {slideInRight, slideInLeft, slideOutRight, slideOutLeft} from 'react-animations';
 
+const SlideInRight = keyframes`${slideInRight}`;
+const SlideInLeft = keyframes`${slideInLeft}`;
+const SlideOutRight = keyframes`${slideOutRight}`;
+const SlideOutLeft = keyframes`${slideOutLeft}`;
 
 const CollectionListWrapper = styled.div`
   display: flex;
-  justify-content: flex-start;
   position: relative;
-`
+`;
 
-const CollectionDiv = styled.div`
+const FirstFiveCollections = styled.div`
   width: 1144px;
   height: 302px;
   padding: 0px 48px 48px 0px;
   margin: 0px auto 48px auto;
-  display: grid;
+  display: ${props => props.stage % 2 === 0 ? 'grid' : 'none'};
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  overflow: visible;
+  animation: 1s ${SlideInLeft};
+`;
+
+const LastFiveCollections = styled.div`
+  width: 1144px;
+  height: 302px;
+  padding: 0px 48px 48px 0px;
+  margin: 0px auto 48px auto;
+  display: ${props => props.stage === 1 ? 'grid' : 'none'};
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  overflow: hidden;
+  animation: 1s ${SlideInRight};
 `;
 
 const NextButton = styled.div`
@@ -58,7 +72,7 @@ const BackButton = styled.div`
   position: absolute;
   cursor: pointer;
   top: 130px;
-  right: 1132px;
+  right: 1160px;
 `;
 
 const BackArrowIcon = styled(KeyboardArrowLeft)`
@@ -70,24 +84,38 @@ left: 14%;
 fill: #757280;
 `;
 
-const CollectionList = (props) => (
-  <CollectionListWrapper>
-    <CollectionDiv>
-      {props.collectionChunk.map((collection, i) => {
-        return <CollectionItem collection={collection} i={i}/>
-      })}
-    </CollectionDiv>
-    {props.state.collectionList.length > 5 && props.state.collectionStart < 5 &&
-    <NextButton onClick={props.nextFive}>
-      <NextArrowIcon></NextArrowIcon>
-    </NextButton>
-    }
-    {props.state.collectionStart >= 5 &&
-    <BackButton onClick={props.previousFive}>
-      <BackArrowIcon></BackArrowIcon>
-    </BackButton>
-    }
-  </CollectionListWrapper>
-);
+
+const CollectionList = (props) => {
+  const firstFive = props.state.collectionList.slice(0, 5);
+  const nextFive = props.state.collectionList.slice(5, 10);
+
+  return (
+    <CollectionListWrapper >
+      <FirstFiveCollections stage={props.state.stage}>
+        {firstFive.map((collection, i) => {
+          return <CollectionItem collection={collection} i={i}/>
+        })}
+      </FirstFiveCollections>
+      {nextFive &&
+      <LastFiveCollections stage={props.state.stage}>
+        {nextFive.map((collection, i) => {
+          return <CollectionItem collection={collection} i={i + 5}/>
+        })}
+      </LastFiveCollections>
+      }
+      {props.state.stage % 2 === 0 && nextFive.length > 0 &&
+      <NextButton onClick={props.nextFive}>
+        <NextArrowIcon></NextArrowIcon>
+      </NextButton>
+      }
+      {props.state.stage === 1 &&
+      <BackButton onClick={props.previousFive}>
+        <BackArrowIcon></BackArrowIcon>
+      </BackButton>
+      }
+    </CollectionListWrapper>
+  );
+
+};
 
 export default CollectionList;
