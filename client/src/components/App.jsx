@@ -25,10 +25,11 @@ import CollectionList from './CollectionList.jsx';
 import styled from 'styled-components';
 
 const Title = styled.h1`
-  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #2b273c;
+  margin-bottom: 24px;
 `;
 
 const Main = styled.div`
@@ -44,10 +45,14 @@ class App extends React.Component {
     this.state = {
       restaurantID: this.props.restID,
       restaurantName: null,
-      collectionList: []
+      collectionList: [],
+      collectionStart: 0
     };
 
+    this.getNextFiveCollections = this.getNextFiveCollections.bind(this);
+    this.getPreviousFiveCollections = this.getPreviousFiveCollections.bind(this);
   };
+
 
   componentDidMount() {
     this.getCollections();
@@ -70,11 +75,27 @@ class App extends React.Component {
     });
   }
 
+  getNextFiveCollections() {
+    this.state.collectionStart += 5;
+    this.setState({
+      collectionStart: this.state.collectionStart
+    });
+  }
+
+  getPreviousFiveCollections() {
+    this.state.collectionStart -= 5;
+    this.setState({
+      collectionStart: this.state.collectionStart
+    });
+  }
+
   render() {
+    const collectionChunk = this.state.collectionList.slice(this.state.collectionStart, this.state.collectionStart + 5);
+
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList collectionList={this.state.collectionList} />
+        <CollectionList collectionChunk={collectionChunk} index={this.state.collectionStart} state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections}/>
       </Main>
     );
   }
