@@ -6,6 +6,15 @@ import CollectionItem from './CollectionItem.jsx';
 import styled from 'styled-components';
 import {KeyboardArrowRight} from '@styled-icons/material-sharp/KeyboardArrowRight';
 import {KeyboardArrowLeft} from '@styled-icons/material-sharp/KeyboardArrowLeft';
+import {keyframes} from 'styled-components';
+import Slider from 'react-styled-carousel';
+
+
+const CollectionListWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  position: relative;
+`
 
 const CollectionDiv = styled.div`
   width: 1144px;
@@ -26,8 +35,8 @@ const NextButton = styled.div`
   border: 1px solid #e6e6e6;
   position: absolute;
   cursor: pointer;
-  top: 200px;
-  right: 193px;
+  left: 1136px;
+  top: 130px;
 `;
 
 const NextArrowIcon = styled(KeyboardArrowRight)`
@@ -48,8 +57,8 @@ const BackButton = styled.div`
   border: 1px solid #e6e6e6;
   position: absolute;
   cursor: pointer;
-  top: 200px;
-  left: 193px;
+  top: 130px;
+  right: 1132px;
 `;
 
 const BackArrowIcon = styled(KeyboardArrowLeft)`
@@ -62,10 +71,12 @@ fill: #757280;
 `;
 
 const CollectionList = (props) => (
-  <CollectionDiv>
-    {props.collectionChunk.map((collection, i) => {
-      return <CollectionItem collection={collection} i={i}/>
-    })}
+  <CollectionListWrapper>
+    <CollectionDiv>
+      {props.collectionChunk.map((collection, i) => {
+        return <CollectionItem collection={collection} i={i}/>
+      })}
+    </CollectionDiv>
     {props.state.collectionList.length > 5 && props.state.collectionStart < 5 &&
     <NextButton onClick={props.nextFive}>
       <NextArrowIcon></NextArrowIcon>
@@ -76,7 +87,7 @@ const CollectionList = (props) => (
       <BackArrowIcon></BackArrowIcon>
     </BackButton>
     }
-  </CollectionDiv>
+  </CollectionListWrapper>
 );
 
 export default CollectionList;

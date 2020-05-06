@@ -54,11 +54,6 @@ class App extends React.Component {
   };
 
 
-  // New addition to state - active (displayed) collections, 5 at a time
-  // Initial state will be 0
-  // Pressing the arrow button (TBD) will increase state by 5
-  // When rendering collections, collectionList will only be passed slice from current state index to current state index + 5
-
   componentDidMount() {
     this.getCollections();
   }

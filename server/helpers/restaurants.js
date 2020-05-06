@@ -18,23 +18,21 @@ const restaurants = getRestaurants();
 // Collection function takes food type and city of each restaurant into account and generates a random name using those fields
 const getCollections = (items) => {
   let collections = [];
+  let photoRandomCount = 1;
 
   items.forEach(item => {
-    // Generate a random num of collections between 2 and 10
 
-    // Also generate a 1 or 2 to determine how collection name will be formatted
-    // 1: Combine adjective, foodType, and city - ex: 'Tasty Mexican in San Francisco'
-    // 2: Combine adjective, 'eats', and city - ex: 'Hip eats in Seattle'
-    // --> Trying to keep unique combos, but if two overlap they'll be handled in the database entries
     let numberCollections = data.randomNumberGenerator(2, 11);
     item.collectionCount = numberCollections;
 
     for (let i = 0; i < numberCollections; i++) {
       let oneOrTwo = data.randomNumberGenerator(1, 3);
+      let userImgUrl = 'https://loremflickr.com/30/30/person?random=1';
+
       if (oneOrTwo === 1) {
-        collections.push(data.generateCollection(item))
+        collections.push(data.generateCollection(item));
       } else {
-        collections.push(data.generateCollection(item, 'eats'))
+        collections.push(data.generateCollection(item, 'eats'));
       }
     }
   });
