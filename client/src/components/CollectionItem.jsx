@@ -10,6 +10,7 @@ const CollectionTitle = styled.p`
   margin: 0px;
   width: 218px;
   line-height: 22px;
+  cursor: pointer;
 `;
 
 const Collection = styled.div`
@@ -29,6 +30,7 @@ const ImageContainer = styled.div`
      "overlay overlay";
   grid-template-columns: 109px 109px;
   grid-template-rows: 109px 109px;
+  cursor: pointer;
 `;
 
 const CoverPhoto = styled.img`

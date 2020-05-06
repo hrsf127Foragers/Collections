@@ -51,6 +51,9 @@ const NextButton = styled.div`
   cursor: pointer;
   left: 1136px;
   top: 130px;
+  &:hover {
+    box-shadow: none;
+  }
 `;
 
 const NextArrowIcon = styled(KeyboardArrowRight)`
@@ -60,6 +63,9 @@ const NextArrowIcon = styled(KeyboardArrowRight)`
   top: 15%;
   left: 14%;
   fill: #757280;
+  &:hover {
+    fill: #2b273c;
+  }
 `;
 
 const BackButton = styled.div`
@@ -73,6 +79,9 @@ const BackButton = styled.div`
   cursor: pointer;
   top: 130px;
   right: 1160px;
+  &:hover {
+    box-shadow: none;
+  }
 `;
 
 const BackArrowIcon = styled(KeyboardArrowLeft)`
@@ -82,6 +91,9 @@ position: absolute;
 top: 15%;
 left: 14%;
 fill: #757280;
+&:hover {
+  fill: #2b273c;
+}
 `;
 
 
