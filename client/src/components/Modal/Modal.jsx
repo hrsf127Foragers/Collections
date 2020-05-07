@@ -11,27 +11,66 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import {Close} from '@styled-icons/material/Close';
 
 const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: rgba(0, 0, 0, 0.7);
   display: ${props => props.show ? 'flex' : 'none'};
   position: absolute;
   justify-content: center;
-`
+  flex-direction: column;
+`;
 
 const ModalBox = styled.div`
   width: 720px;
-  height: 600px;
+  height: 750px;
   align-self: center;
   background-color: #fff;
+  border-radius: 5px;
+  overflow: scroll;
+`;
+
+const CloseContainer = styled.p`
+  width: 720px;
+  line-height: 20px;
+  align-self: center;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+`;
+
+const CloseButton = styled.a`
+  width: 720px;
+  line-height: 20px;
+  font-weight: 400;
+  font-size: 14px;
+  text-align: right;
+  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  color: white;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const CloseIcon = styled(Close)`
+  height: 24px;
+  width: 24px;
+  cursor: pointer;
 `;
 
 const Modal = (props) => (
   <ModalContainer show={props.state.displayModal}>
+    <CloseContainer>
+      <CloseButton onClick={props.close}>
+        Close
+        <CloseIcon></CloseIcon>
+      </CloseButton>
+    </CloseContainer>
     <ModalBox>
       <span>Hello</span>
     </ModalBox>

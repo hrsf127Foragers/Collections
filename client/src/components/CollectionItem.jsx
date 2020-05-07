@@ -82,7 +82,7 @@ const CollectionItem = (props) => {
   const nameJoin = nameSplit.join(' ');
 
   return (
-    <Collection>
+    <Collection onClick={props.toggleModal}>
       <ImageContainer>
         <CoverPhoto src={`${props.collection.coll_img_url}?random=${props.i}`} />
         <PhotoOverlay>

@@ -39,11 +39,12 @@ class App extends React.Component {
       restaurantName: null,
       collectionList: [],
       stage: 0,
-      displayModal: true
+      displayModal: false
     };
 
     this.getNextFiveCollections = this.getNextFiveCollections.bind(this);
     this.getPreviousFiveCollections = this.getPreviousFiveCollections.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   };
 
 
@@ -80,13 +81,20 @@ class App extends React.Component {
     });
   }
 
+  // Function to toggle display of modal
+  toggleModal() {
+    this.setState({
+      displayModal: !this.state.displayModal
+    });
+  }
+
   render() {
 
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections}/>
-        <Modal state={this.state}/>
+        <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections} toggleModal={this.toggleModal}/>
+        <Modal state={this.state} close={this.toggleModal}/>
       </Main>
     );
   }
