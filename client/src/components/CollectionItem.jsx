@@ -33,10 +33,9 @@ const ImageContainer = styled.div`
   cursor: pointer;
 `;
 
-const CoverPhoto = styled.img`
+export const CoverPhoto = styled.img`
   border-radius: 4px;
   grid-area: cover;
-
 `;
 
 const PhotoOverlay = styled.p`
@@ -75,14 +74,14 @@ const BookmarkIcon = styled(Bookmark)`
   justify-self: end;
 `;
 
-const CollectionItem = (props) => {
+export const CollectionItem = (props) => {
   const nameSplit = props.collection.user_creator.split(' ');
   const lastInitial = nameSplit[nameSplit.length-1].slice(0, 1);
   nameSplit[nameSplit.length-1] = lastInitial + '.';
   const nameJoin = nameSplit.join(' ');
 
   return (
-    <Collection>
+    <Collection onClick={props.toggleModal}>
       <ImageContainer>
         <CoverPhoto src={`${props.collection.coll_img_url}?random=${props.i}`} />
         <PhotoOverlay>
@@ -96,4 +95,4 @@ const CollectionItem = (props) => {
   );
 };
 
-export default CollectionItem;
+// export default CollectionItem;

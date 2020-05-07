@@ -1,43 +1,34 @@
-// App will be a stateful class component
-// Will have an initial state set to whatever restaurant id is passed from app
-// For now, will render a collectionList for the given restaurant ID
-// How do we get that collectionList?
-// Send a get request on componentDidMount to server
-// get request to url: 'http://localhost:4568/${this.state.id}/collections
-// When data is received, should have an array of collection objects in the following format:
-/*
-    {
-        "id": 113,
-        "coll_name": "Small Sandwiches in Bernhardberg",
-        "user_creator": "Francisca Mayer",
-        "coll_followers": 154,
-        "last_update": "August 5th 1994",
-        "user_followers": 728,
-        "user_ratings": 345,
-        "user_img_url": "https://loremflickr.com/218/218/food"
-    }
-*/
-// Pass the whole array to props of collectionList
-
 import React from 'react';
 import $ from 'jquery';
-import CollectionList from './CollectionList.jsx';
+import {CollectionList} from './CollectionList.jsx';
+import Modal from './Modal/Modal.jsx';
 import styled from 'styled-components';
+
+const Main = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
 
 const Title = styled.h1`
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #2b273c;
-  margin-bottom: 24px;
+  width: 1174px;
+  margin: 24px auto;
 `;
 
-const Main = styled.div`
-  width: 1174px;
-  height: 360px;
-  margin: auto;
-  position: relative;
-`;
+// MODAL
+// State of app should have a display property set to a boolean, determining whether or not to show modal
+// Add a currentCollection property to state too - when a collection is selected in collectionItem, will set this state to the selected collection
+//  Also, collection Click handler should make a request for all restaurants in the selected collection from the database
+//  Those restaurants can be added to a current restaurants component in state, which will be passed to modal
+// Can just pass the state to modal when rendering
+//
 
 class App extends React.Component {
   constructor(props) {
@@ -47,11 +38,13 @@ class App extends React.Component {
       restaurantID: this.props.restID,
       restaurantName: null,
       collectionList: [],
-      stage: 0
+      stage: 0,
+      displayModal: false
     };
 
     this.getNextFiveCollections = this.getNextFiveCollections.bind(this);
     this.getPreviousFiveCollections = this.getPreviousFiveCollections.bind(this);
+    this.toggleModal = this.toggleModal.bind(this);
   };
 
 
@@ -88,12 +81,20 @@ class App extends React.Component {
     });
   }
 
+  // Function to toggle display of modal
+  toggleModal() {
+    this.setState({
+      displayModal: !this.state.displayModal
+    });
+  }
+
   render() {
 
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections}/>
+        <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections} toggleModal={this.toggleModal}/>
+        <Modal state={this.state} close={this.toggleModal}/>
       </Main>
     );
   }

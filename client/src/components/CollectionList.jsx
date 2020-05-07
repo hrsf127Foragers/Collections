@@ -2,7 +2,7 @@
 // Will have an array of collection objects in its props
 // Map over each, and create a collection item for each
 import React from 'react';
-import CollectionItem from './CollectionItem.jsx';
+import {CollectionItem} from './CollectionItem.jsx';
 import styled from 'styled-components';
 import {KeyboardArrowRight} from '@styled-icons/material-sharp/KeyboardArrowRight';
 import {KeyboardArrowLeft} from '@styled-icons/material-sharp/KeyboardArrowLeft';
@@ -17,6 +17,9 @@ const SlideOutLeft = keyframes`${slideOutLeft}`;
 const CollectionListWrapper = styled.div`
   display: flex;
   position: relative;
+  width: 1174px;
+  height: auto;
+  margin: auto;
 `;
 
 const FirstFiveCollections = styled.div`
@@ -105,13 +108,13 @@ const CollectionList = (props) => {
     <CollectionListWrapper >
       <FirstFiveCollections stage={props.state.stage}>
         {firstFive.map((collection, i) => {
-          return <CollectionItem collection={collection} i={i}/>
+          return <CollectionItem toggleModal={props.toggleModal} collection={collection} i={i}/>
         })}
       </FirstFiveCollections>
       {nextFive &&
       <LastFiveCollections stage={props.state.stage}>
         {nextFive.map((collection, i) => {
-          return <CollectionItem collection={collection} i={i + 5}/>
+          return <CollectionItem toggleModal={props.toggleModal} collection={collection} i={i + 5}/>
         })}
       </LastFiveCollections>
       }
@@ -130,4 +133,4 @@ const CollectionList = (props) => {
 
 };
 
-export default CollectionList;
+export {CollectionList, BackButton, NextButton};
