@@ -2,7 +2,7 @@
 // Will have an array of collection objects in its props
 // Map over each, and create a collection item for each
 import React from 'react';
-import CollectionItem from './CollectionItem.jsx';
+import {CollectionItem} from './CollectionItem.jsx';
 import styled from 'styled-components';
 import {KeyboardArrowRight} from '@styled-icons/material-sharp/KeyboardArrowRight';
 import {KeyboardArrowLeft} from '@styled-icons/material-sharp/KeyboardArrowLeft';
@@ -133,4 +133,4 @@ const CollectionList = (props) => {
 
 };
 
-export default CollectionList;
+export {CollectionList, BackButton, NextButton};

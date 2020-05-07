@@ -1,5 +1,5 @@
 import App from '../client/src/components/App.jsx';
-import CollectionList from '../client/src/components/CollectionList.jsx';
+import {CollectionList} from '../client/src/components/CollectionList.jsx';
 import Modal from '../client/src/components/Modal/Modal.jsx';
 
 import {mount, shallow} from 'enzyme';

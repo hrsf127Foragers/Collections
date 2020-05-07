@@ -1,6 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
-import CollectionList from './CollectionList.jsx';
+import {CollectionList} from './CollectionList.jsx';
 import Modal from './Modal/Modal.jsx';
 import styled from 'styled-components';
 

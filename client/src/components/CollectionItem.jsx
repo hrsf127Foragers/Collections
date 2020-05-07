@@ -33,7 +33,7 @@ const ImageContainer = styled.div`
   cursor: pointer;
 `;
 
-const CoverPhoto = styled.img`
+export const CoverPhoto = styled.img`
   border-radius: 4px;
   grid-area: cover;
 `;
@@ -74,7 +74,7 @@ const BookmarkIcon = styled(Bookmark)`
   justify-self: end;
 `;
 
-const CollectionItem = (props) => {
+export const CollectionItem = (props) => {
   const nameSplit = props.collection.user_creator.split(' ');
   const lastInitial = nameSplit[nameSplit.length-1].slice(0, 1);
   nameSplit[nameSplit.length-1] = lastInitial + '.';
@@ -95,4 +95,4 @@ const CollectionItem = (props) => {
   );
 };
 
-export default CollectionItem;
+// export default CollectionItem;
