@@ -1,11 +1,10 @@
 import App from '../client/src/components/App.jsx';
 import CollectionList from '../client/src/components/CollectionList.jsx';
 import Modal from '../client/src/components/Modal/Modal.jsx';
-import Title from '../client/src/components/App.jsx';
 
 import {mount, shallow} from 'enzyme';
 
-describe('<App />', () => {
+describe('App', () => {
   it ('exists', () => {
     const wrapper = shallow(<App />);
     expect(wrapper).toExist();
