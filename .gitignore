@@ -1,2 +1,3 @@
 node_modules
 coverage
+client/public/dist/bundle.js
