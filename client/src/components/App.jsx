@@ -38,18 +38,29 @@ class App extends React.Component {
       restaurantID: this.props.restID,
       restaurantName: null,
       collectionList: [],
+      restaurantList: [],
       stage: 0,
       displayModal: false
     };
 
+    this.setRestaurants;
+
     this.getNextFiveCollections = this.getNextFiveCollections.bind(this);
     this.getPreviousFiveCollections = this.getPreviousFiveCollections.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+    this.updateRestaurantState = this.updateRestaurantState.bind(this);
   };
 
 
   componentDidMount() {
     this.getCollections();
+
+    this.setRestaurants = this.memoizeRestaurantRetrieval(this.getRestaurants, (results) => {
+      this.setState({
+        restaurantList: results,
+        displayModal: true
+      });
+    });
   }
 
   getCollections() {
@@ -57,11 +68,46 @@ class App extends React.Component {
       method: 'GET',
       url: `http://localhost:4568/${this.state.restaurantID}/collections`,
       success: (data) => {
-        console.log('Logging data from server => ', data);
         this.setState({
           restaurantName: data[data.length - 1],
           collectionList: data.slice(0, data.length - 1)
         });
+      },
+      error: () => {
+        console.log('Error fetching data from server');
+      }
+    });
+  }
+
+  // getRestaurants function
+  // returns restaurants
+  // memoize to cache results for a given collection to avoid making another ajax request
+  // makeshift memoize
+  updateRestaurantState(collection) {
+    this.setRestaurants(collection.id);
+  }
+
+  memoizeRestaurantRetrieval(func, callback) {
+    let cache = {};
+
+    return function(id) {
+      if (cache[id]) {
+        callback(cache[id]);
+      } else {
+        func(id, (results) => {
+          cache[id] = results;
+          callback(cache[id]);
+        });
+      }
+    };
+  }
+
+  getRestaurants(collectionId, callback) {
+    $.ajax({
+      method: 'GET',
+      url: `http://localhost:4568/${collectionId}/restaurants`,
+      success: (data) => {
+        callback(data);
       },
       error: () => {
         console.log('Error fetching data from server');
@@ -82,9 +128,9 @@ class App extends React.Component {
   }
 
   // Function to toggle display of modal
-  toggleModal() {
+  closeModal() {
     this.setState({
-      displayModal: !this.state.displayModal
+      displayModal: false
     });
   }
 
@@ -93,8 +139,8 @@ class App extends React.Component {
     return (
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
-        <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections} toggleModal={this.toggleModal}/>
-        <Modal state={this.state} close={this.toggleModal}/>
+        <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections} getRestaurants={this.updateRestaurantState}/>
+        <Modal state={this.state} close={this.closeModal}/>
       </Main>
     );
   }
