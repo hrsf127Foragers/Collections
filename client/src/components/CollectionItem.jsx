@@ -36,7 +36,6 @@ const ImageContainer = styled.div`
 const CoverPhoto = styled.img`
   border-radius: 4px;
   grid-area: cover;
-
 `;
 
 const PhotoOverlay = styled.p`

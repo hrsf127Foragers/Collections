@@ -11,7 +11,16 @@
 
 import React from 'react';
 import styled from 'styled-components';
+import ModalGallery from './ModalGallery.jsx';
 import {Close} from '@styled-icons/material/Close';
+
+const testImages = [
+  'https://loremflickr.com/218/218/food?random=1',
+  'https://loremflickr.com/218/218/food?random=2',
+  'https://loremflickr.com/218/218/food?random=3',
+  'https://loremflickr.com/218/218/food?random=4',
+  'https://loremflickr.com/218/218/food?random=5'
+];
 
 const ModalContainer = styled.div`
   width: 100%;
@@ -31,7 +40,10 @@ const ModalBox = styled.div`
   align-self: center;
   background-color: #fff;
   border-radius: 5px;
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  position: relative;
+  display: block;
 `;
 
 const CloseContainer = styled.p`
@@ -72,7 +84,7 @@ const Modal = (props) => (
       </CloseButton>
     </CloseContainer>
     <ModalBox>
-      <span>Hello</span>
+      <ModalGallery images={testImages}/>
     </ModalBox>
   </ModalContainer>
 );
