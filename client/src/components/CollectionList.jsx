@@ -17,6 +17,9 @@ const SlideOutLeft = keyframes`${slideOutLeft}`;
 const CollectionListWrapper = styled.div`
   display: flex;
   position: relative;
+  width: 1174px;
+  height: auto;
+  margin: auto;
 `;
 
 const FirstFiveCollections = styled.div`

@@ -4,19 +4,22 @@ import CollectionList from './CollectionList.jsx';
 import Modal from './Modal/Modal.jsx';
 import styled from 'styled-components';
 
+const Main = styled.div`
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+`;
+
 const Title = styled.h1`
   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #2b273c;
-  margin-bottom: 24px;
-`;
-
-const Main = styled.div`
   width: 1174px;
-  height: 360px;
-  margin: auto;
-  position: relative;
+  margin: 24px auto;
 `;
 
 // MODAL

@@ -12,21 +12,30 @@
 import React from 'react';
 import styled from 'styled-components';
 
+const ModalContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: ${props => props.show ? 'flex' : 'none'};
+  position: absolute;
+  justify-content: center;
+`
+
 const ModalBox = styled.div`
   width: 720px;
-  height: 500px;
-  position: absolute;
-  top: 30%;
-  left: 227px;
-  background-color: gray;
-  margin: auto;
-  display: ${props => props.show ? 'flex' : 'none'};
+  height: 600px;
+  align-self: center;
+  background-color: #fff;
 `;
 
 const Modal = (props) => (
-  <ModalBox show={props.state.displayModal}>
-    <span>Hello</span>
-  </ModalBox>
+  <ModalContainer show={props.state.displayModal}>
+    <ModalBox>
+      <span>Hello</span>
+    </ModalBox>
+  </ModalContainer>
 );
 
 export default Modal;
