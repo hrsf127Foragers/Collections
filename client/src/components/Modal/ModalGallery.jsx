@@ -94,4 +94,4 @@ const ModalGallery = (props) => (
   </ImageContainer>
 );
 
-export default ModalGallery;
+export {ModalGallery, GalleryImage, OverlayContainer, CollectionCount};

@@ -83,7 +83,7 @@ const CollectionItem = (props) => {
   return (
     <Collection onClick={() => {props.getRestaurants(props.collection)}}>
       <ImageContainer>
-        <CoverPhoto src={`${props.collection.coll_img_url}?random=${props.i}`} />
+        <CoverPhoto src={props.collection.coll_img_url} />
         <PhotoOverlay>
           <CollectionDetails>{props.collection.rest_count}</CollectionDetails>
           <BookmarkIcon></BookmarkIcon>

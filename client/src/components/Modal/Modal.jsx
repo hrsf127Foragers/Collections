@@ -11,7 +11,7 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import ModalGallery from './ModalGallery.jsx';
+import {ModalGallery} from './ModalGallery.jsx';
 import ModalDescriptionBox from './ModalDescriptionBox.jsx';
 import {Close} from '@styled-icons/material/Close';
 
