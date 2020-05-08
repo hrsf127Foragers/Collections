@@ -15,8 +15,8 @@ const insertRestaurant = (restaurant, callback) => {
 
 // Insert a collection into the collections table
 const insertCollection = (collection, callback) => {
-  let connQuery = 'INSERT INTO collections VALUES(0, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-  let connArgs = [collection.name, collection.creator, collection.coll_followers, collection.last_update, collection.user_followers, collection.user_ratings, collection.userImage, collection.coverImage, collection.restCount];
+  let connQuery = 'INSERT INTO collections VALUES(0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+  let connArgs = [collection.name, collection.creator, collection.coll_followers, collection.last_update, collection.user_followers, collection.user_ratings, collection.userImage, collection.coverImage, collection.restCount, collection.coll_description];
 
   db.connection.query(connQuery, connArgs, (err, results) => {
     if (err) {

@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const port = 4568;
 const morgan = require('morgan');
-
+const casual = require('casual');
 const models = require('../database/models.js');
 
 app.use(morgan('tiny'));

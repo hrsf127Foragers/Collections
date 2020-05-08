@@ -46,6 +46,7 @@ module.exports = {
     let userImg = 'https://loremflickr.com/30/30/person?random=1';
     let coverImg = 'https://loremflickr.com/218/218/food?random=1';
     let numRestaurants = this.randomNumberGenerator(10, 51);
+    let description = casual.text.slice(0, 255);
 
     return {
       name: `${randomAdjective} ${foodType} in ${restaurant.city}`,
@@ -58,7 +59,8 @@ module.exports = {
       type: foodType,
       userImage: userImg,
       coverImage: coverImg,
-      restCount: numRestaurants
+      restCount: numRestaurants,
+      coll_description: description
     };
   }
 };

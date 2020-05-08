@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS collections (
   user_img_url VARCHAR(255),
   coll_img_url VARCHAR(255),
   rest_count INT(3),
+  coll_description VARCHAR(255),
   PRIMARY KEY (id)
 );
 
