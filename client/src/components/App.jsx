@@ -38,6 +38,7 @@ class App extends React.Component {
       restaurantID: this.props.restID,
       restaurantName: null,
       collectionList: [],
+      currentCollection: {},
       restaurantList: [],
       stage: 0,
       displayModal: false
@@ -55,8 +56,10 @@ class App extends React.Component {
   componentDidMount() {
     this.getCollections();
 
-    this.setRestaurants = this.memoizeRestaurantRetrieval(this.getRestaurants, (results) => {
+    // Assign this.setRestaurants to the memoized version of this.getRestaurants
+    this.setRestaurants = this.memoizeRestaurantRetrieval(this.getRestaurants, (results, collection) => {
       this.setState({
+        currentCollection: collection,
         restaurantList: results,
         displayModal: true
       });
@@ -79,24 +82,21 @@ class App extends React.Component {
     });
   }
 
-  // getRestaurants function
-  // returns restaurants
-  // memoize to cache results for a given collection to avoid making another ajax request
-  // makeshift memoize
   updateRestaurantState(collection) {
-    this.setRestaurants(collection.id);
+    this.setRestaurants(collection);
   }
 
+  // makeshift memoize so that get requests are only made once for each selected collection
   memoizeRestaurantRetrieval(func, callback) {
     let cache = {};
 
-    return function(id) {
-      if (cache[id]) {
-        callback(cache[id]);
+    return function(collection) {
+      if (cache[collection.id]) {
+        callback(cache[collection.id], collection);
       } else {
-        func(id, (results) => {
-          cache[id] = results;
-          callback(cache[id]);
+        func(collection.id, (results) => {
+          cache[collection.id] = results;
+          callback(cache[collection.id], collection);
         });
       }
     };

@@ -9,9 +9,6 @@ import {Bookmark} from '@styled-icons/boxicons-solid/Bookmark';
 const ImageContainer = styled.div`
   width: 100%;
   height: 317px;
-  top: 0;
-  left: 0;
-  position: absolute;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
