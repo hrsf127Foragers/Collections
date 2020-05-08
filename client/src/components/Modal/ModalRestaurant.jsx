@@ -11,6 +11,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import {StarFull} from '@styled-icons/icomoon/StarFull';
+import {DotSingle} from '@styled-icons/entypo/DotSingle';
 
 const RestaurantWrapper = styled.div`
   width: 100%;
@@ -25,7 +26,7 @@ const RestaurantWrapper = styled.div`
   margin: 0;
 `;
 
-// child 1 of restaurant wrapper
+// Child 1 of Restaurant Wrapper
 const RestaurantInfoContainer = styled.div`
   width: 70%;
   height: 90px;
@@ -35,7 +36,7 @@ const RestaurantInfoContainer = styled.div`
   position: relative;
 `;
 
-// child 1 of restaurantinfocontainer
+// Child 1 of Restaurant Info Container
 const RestaurantImageContainer = styled.div`
   width: 90px;
   height: 100%;
@@ -50,13 +51,14 @@ const RestaurantImage = styled.img`
   border-radius: 3px;
 `;
 
-// child 2 of restaurantinfocontainer
+// Child 2 of Restaurant Info Container
 const RestaurantSpecsContainer = styled.div`
   font-family: inherit;
   margin-left: 10px;
   display: block;
 `;
 
+// Child 1 of Restaurant Specs Container
 const RestaurantTitle = styled.span`
   font-family: inherit;
   font-size: 14px;
@@ -68,6 +70,7 @@ const RestaurantTitle = styled.span`
   cursor: pointer;
 `;
 
+// Child 2 of Restaurant Specs Container
 const ReviewWrapper = styled.div`
   height: 18px;
   width: 100%;
@@ -115,44 +118,114 @@ const RestaurantStarIcon = styled(StarFull)`
   color: white;
 `;
 
-// 3 stars: #ff7e42
-// 4 stars: #ff523d
-// 5 stars: #f43939
+const RestaurantReviewCount = styled.span`
+  height: 100%;
+  margin-left: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+`;
 
-const ModalRestaurant = (props) => (
-  <RestaurantWrapper first={props.i === 0 ? true : false}>
-    <RestaurantInfoContainer>
-      <RestaurantImageContainer>
-        <RestaurantImage src={props.restaurant.img_url} />
-      </RestaurantImageContainer>
-      <RestaurantSpecsContainer>
-        <RestaurantTitle>{props.restaurant.rest_name}</RestaurantTitle>
-        <ReviewWrapper>
-          {[1, 2, 3, 4, 5].map(num => {
-            if (props.restaurant.rating === 5) {
-              return (
-                <FiveStarWrapper first={num === 1}>
-                  <RestaurantStarIcon></RestaurantStarIcon>
-                </FiveStarWrapper>
-              );
-            } else if (props.restaurant.rating === 4) {
-              return (
-                <FourStarWrapper first={num === 1} fill={num <= props.restaurant.rating}>
-                  <RestaurantStarIcon></RestaurantStarIcon>
-                </FourStarWrapper>
-              );
-            } else {
-              return (
-                <ThreeStarWrapper first={num === 1} fill={num <= props.restaurant.rating}>
-                  <RestaurantStarIcon></RestaurantStarIcon>
-                </ThreeStarWrapper>
-              );
-            }
-          })}
-        </ReviewWrapper>
-      </RestaurantSpecsContainer>
-    </RestaurantInfoContainer>
-  </RestaurantWrapper>
-);
+// Child 3 of Restaurant Specs Container
+const PriceAndTypeWrapper = styled.div`
+  width: 100%;
+  margin-top: 6px;
+  height: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  position: relative;
+`;
+
+const PriceAndTypeText = styled.span`
+  height: 100%;
+  font-family: inherit;
+  font-size: 12px;
+  color: ${props => props.type ? '#0073bb' : '#333'};
+  font-weight: 400;
+  margin-left: ${props => props.type ? '4px' : 'none'};;
+  &:hover {
+    text-decoration: ${props => props.type ? 'underline' : 'none'};
+  };
+  cursor: ${props => props.type ? 'pointer' : 'none'};
+`;
+
+const DotIcon = styled(DotSingle)`
+  margin-left: 4px;
+  height: 10px;
+  width: 10px;
+  align-self: center;
+  color: #999;
+`;
+
+const RestaurantLocationWrapper = styled.div`
+  height: 16px;
+  margin-top: 2px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
+
+const RestaurantLocation = styled.span`
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333;
+`;
+
+const ModalRestaurant = (props) => {
+  const reviewStars = [1, 2, 3, 4, 5].map(num => {
+    if (props.restaurant.rating === 5) {
+      return (
+        <FiveStarWrapper first={num === 1}>
+          <RestaurantStarIcon></RestaurantStarIcon>
+        </FiveStarWrapper>
+      );
+    } else if (props.restaurant.rating === 4) {
+      return (
+        <FourStarWrapper first={num === 1} fill={num <= props.restaurant.rating}>
+          <RestaurantStarIcon></RestaurantStarIcon>
+        </FourStarWrapper>
+      );
+    } else {
+      return (
+        <ThreeStarWrapper first={num === 1} fill={num <= props.restaurant.rating}>
+          <RestaurantStarIcon></RestaurantStarIcon>
+        </ThreeStarWrapper>
+      );
+    }
+  });
+
+  let dollarSigns = '';
+  for (let i = 0; i < props.restaurant.price_range; i++) {
+    dollarSigns += '$';
+  };
+
+  return (
+    <RestaurantWrapper first={props.i === 0 ? true : false}>
+      <RestaurantInfoContainer>
+        <RestaurantImageContainer>
+          <RestaurantImage src={props.restaurant.img_url} />
+        </RestaurantImageContainer>
+        <RestaurantSpecsContainer>
+          <RestaurantTitle>{props.restaurant.rest_name}</RestaurantTitle>
+          <ReviewWrapper>
+            {reviewStars}
+            <RestaurantReviewCount>{props.restaurant.num_reviews} reviews</RestaurantReviewCount>
+          </ReviewWrapper>
+          <PriceAndTypeWrapper>
+            <PriceAndTypeText>{dollarSigns}</PriceAndTypeText>
+            <DotIcon></DotIcon>
+            <PriceAndTypeText type>{props.restaurant.food_type}</PriceAndTypeText>
+          </PriceAndTypeWrapper>
+          <RestaurantLocationWrapper>
+            <RestaurantLocation>{props.restaurant.city}</RestaurantLocation>
+          </RestaurantLocationWrapper>
+        </RestaurantSpecsContainer>
+      </RestaurantInfoContainer>
+    </RestaurantWrapper>
+  );
+};
 
 export default ModalRestaurant;
