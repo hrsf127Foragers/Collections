@@ -5,7 +5,7 @@ const getRestaurants = () => {
   let results = [];
 
   for (var i = 0; i < 100; i++) {
-    results.push(data.generateRestaurant());
+    results.push(data.generateRestaurant(null, null, i));
   }
 
   return results;
@@ -18,7 +18,7 @@ const restaurants = getRestaurants();
 // Collection function takes food type and city of each restaurant into account and generates a random name using those fields
 const getCollections = (items) => {
   let collections = [];
-  let photoRandomCount = 1;
+  let photoID = 1;
 
   items.forEach(item => {
 
@@ -27,13 +27,13 @@ const getCollections = (items) => {
 
     for (let i = 0; i < numberCollections; i++) {
       let oneOrTwo = data.randomNumberGenerator(1, 3);
-      let userImgUrl = 'https://loremflickr.com/30/30/person?random=1';
 
       if (oneOrTwo === 1) {
-        collections.push(data.generateCollection(item));
+        collections.push(data.generateCollection(item, null, photoID));
       } else {
-        collections.push(data.generateCollection(item, 'eats'));
+        collections.push(data.generateCollection(item, 'eats', photoID));
       }
+      photoID++;
     }
   });
 
@@ -86,17 +86,20 @@ addPairingsForRestaurants(restaurants);
 // Secondary restaurants are restaurants that we won't have individual pages for (collections --> secondary restaurants is a one-to-many relationship)
 const addRestaurantsToCollections = (colls) => {
   let secondaryRestaurants = [];
+  let restPhotoID = 101;
 
   colls.forEach(coll => {
     let numRestaurants = coll.restCount;
 
     if (coll.type === 'eats') {
       for (let i = 0; i < numRestaurants - 1; i++) {
-        secondaryRestaurants.push(data.generateRestaurant(null, coll.city));
+        secondaryRestaurants.push(data.generateRestaurant(null, coll.city, restPhotoID));
+        restPhotoID++;
       }
     } else {
       for (let i = 0; i < numRestaurants - 1; i++) {
-        secondaryRestaurants.push(data.generateRestaurant(coll.type, coll.city));
+        secondaryRestaurants.push(data.generateRestaurant(coll.type, coll.city, restPhotoID));
+        restPhotoID++;
       }
     }
   });
