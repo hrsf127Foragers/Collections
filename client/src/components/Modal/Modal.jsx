@@ -13,6 +13,7 @@ import React from 'react';
 import styled from 'styled-components';
 import {ModalGallery} from './ModalGallery.jsx';
 import ModalDescriptionBox from './ModalDescriptionBox.jsx';
+import ModalRestaurantList from './ModalRestaurantList.jsx';
 import {Close} from '@styled-icons/material/Close';
 
 const ModalContainer = styled.div`
@@ -79,6 +80,7 @@ const Modal = (props) => (
       <ModalBox>
         <ModalGallery collection={props.state.currentCollection}/>
         <ModalDescriptionBox collection={props.state.currentCollection}/>
+        <ModalRestaurantList state={props.state}/>
       </ModalBox>
     </ModalContainer>
 );
