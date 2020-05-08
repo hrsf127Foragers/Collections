@@ -17,7 +17,7 @@ import {Star} from '@styled-icons/fa-solid/Star';
 const CollectionInfoBox = styled.div`
   margin: 36px auto;
   width: 633px;
-  height: 287px;
+  height: 305px;
   position: relative;
   font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
 `;
@@ -165,6 +165,40 @@ const StarIcon = styled(Star)`
   color: #f15c00;
 `;
 
+const FollowCollectionDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  height: 36px;
+  margin-top: 18px;
+`;
+
+const FollowCollectionButton = styled.button`
+  background-color: #d32323;
+  border: 1px solid #d32323;
+  width: 160px;
+  color: white;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  &:hover {
+    filter: brightness(105%);
+  }
+  cursor: pointer;
+  border-radius: 3px;
+`;
+
+const ReportCollection = styled.span`
+  font-family: inherit;
+  font-size: 14px;
+  color: #0073bb;
+  font-weight: 400px;
+  cursor: pointer;
+  line-height: 16px;
+  align-self: flex-start;
+`;
+
 const ModalDescriptionBox = ({collection}) => (
   <CollectionInfoBox>
     <DiscoverDiv>
@@ -193,6 +227,10 @@ const ModalDescriptionBox = ({collection}) => (
         </UserIconWrapper>
       </UserSpecs>
     </UserInfoDiv>
+    <FollowCollectionDiv>
+      <FollowCollectionButton>Follow Collection</FollowCollectionButton>
+      <ReportCollection>Report Collection</ReportCollection>
+    </FollowCollectionDiv>
   </CollectionInfoBox>
 );
 
