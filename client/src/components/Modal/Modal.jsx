@@ -15,14 +15,6 @@ import {ModalGallery} from './ModalGallery.jsx';
 import ModalDescriptionBox from './ModalDescriptionBox.jsx';
 import {Close} from '@styled-icons/material/Close';
 
-const testImages = [
-  'https://loremflickr.com/218/218/food?random=1',
-  'https://loremflickr.com/218/218/food?random=2',
-  'https://loremflickr.com/218/218/food?random=3',
-  'https://loremflickr.com/218/218/food?random=4',
-  'https://loremflickr.com/218/218/food?random=5'
-];
-
 const ModalContainer = styled.div`
   width: 100%;
   height: 100%;
@@ -85,7 +77,7 @@ const Modal = (props) => (
         </CloseButton>
       </CloseContainer>
       <ModalBox>
-        <ModalGallery images={testImages}/>
+        <ModalGallery collection={props.state.currentCollection}/>
         <ModalDescriptionBox collection={props.state.currentCollection}/>
       </ModalBox>
     </ModalContainer>

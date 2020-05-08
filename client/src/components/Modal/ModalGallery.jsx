@@ -74,21 +74,22 @@ const ModalBookmarkIcon = styled(Bookmark)`
   margin-right: 3px;
 `;
 
-const ModalGallery = (props) => (
+const ModalGallery = ({collection}) => (
   <ImageContainer>
-    {props.images.map((image, i) => {
-      if (i === 4) {
+    {[0, 1, 2, 3, 4].map(num => {
+      debugger;
+      if (num === 4) {
         return (
           <OverlayContainer>
-            <BottomRightImage src={image}/>
+            <BottomRightImage src={`${collection.coll_img_url}${num}`}/>
             <CornerImageOverlay>
               <ModalBookmarkIcon></ModalBookmarkIcon>
-              <CollectionCount>10</CollectionCount>
+              <CollectionCount>{collection.rest_count}</CollectionCount>
             </CornerImageOverlay>
           </OverlayContainer>
         );
       } else {
-        return <GalleryImage i={`square${i}`} src={image}/>
+        return <GalleryImage i={`square${num}`} src={`${collection.coll_img_url}${num}`}/>
       }
     })}
   </ImageContainer>

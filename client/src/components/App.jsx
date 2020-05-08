@@ -22,13 +22,6 @@ const Title = styled.h1`
   margin: 24px auto;
 `;
 
-// MODAL
-// State of app should have a display property set to a boolean, determining whether or not to show modal
-// Add a currentCollection property to state too - when a collection is selected in collectionItem, will set this state to the selected collection
-//  Also, collection Click handler should make a request for all restaurants in the selected collection from the database
-//  Those restaurants can be added to a current restaurants component in state, which will be passed to modal
-// Can just pass the state to modal when rendering
-//
 
 class App extends React.Component {
   constructor(props) {
