@@ -11,12 +11,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import {KeyboardArrowRight} from '@styled-icons/material-sharp/KeyboardArrowRight';
+import {Person} from '@styled-icons/evaicons-solid/Person';
+import {Star} from '@styled-icons/fa-solid/Star';
 
 const CollectionInfoBox = styled.div`
   margin: 36px auto;
   width: 633px;
   height: 287px;
-
   position: relative;
   font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
 `;
@@ -32,9 +33,9 @@ const DiscoverDiv = styled.div`
   justify-content: flex-start;
   align-items: center;
   margin-bottom: 30px;
-`;
+  `;
 
-const DiscoverText = styled.span`
+  const DiscoverAndUserText = styled.span`
   color: #0073bb;
   font-weight: 700;
   font-family: inherit;
@@ -43,6 +44,8 @@ const DiscoverText = styled.span`
   }
   font-size: 14px;
   cursor: pointer;
+  margin-left: ${props => props.user ? '7px' : '0'};
+
 `;
 
 const DiscoverNextArrow = styled(KeyboardArrowRight)`
@@ -98,16 +101,74 @@ const ModalCollectionTitle = styled.h1`
 
 const CollectionDescription = styled.p`
   margin-top: 18px;
+  position: relative;
   font-size: 14px;
   font-family: inherit;
   font-weight: 400;
   color: #333;
 `;
 
+const UserInfoDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  margin-top: 18px;
+  height: 38px;
+  justify-content: flex-start;
+`;
+
+const UserImageWrapper = styled.div`
+  position: relative;
+  width: 30px;
+  height: 30px;
+  align-self: center;
+`;
+
+const UserImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 3px;
+`;
+
+const UserSpecs = styled.div`
+  display: block;
+  position: relative;
+`;
+
+const UserIconWrapper = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  margin-top: 2px;
+  margin-left: 5px;
+`;
+
+const UserIcon = styled(Person)`
+  width: 14px;
+  height: 15px;
+  color: ${props => props.right ? '#f8ad7f' : '#f15c00'};
+  margin: 0;
+`;
+
+const UserFollowerAndReviewCount = styled.span`
+  font-family: inherit;
+  font-weight: 700;
+  color: #686868;
+  font-size: 12px;
+  margin-left: 5px;
+`;
+
+const StarIcon = styled(Star)`
+  width: 15px;
+  height: 15px;
+  margin-left: 10px;
+  color: #f15c00;
+`;
+
 const ModalDescriptionBox = ({collection}) => (
   <CollectionInfoBox>
     <DiscoverDiv>
-      <DiscoverText>Discover</DiscoverText>
+      <DiscoverAndUserText>Discover</DiscoverAndUserText>
       <DiscoverNextArrow></DiscoverNextArrow>
       <DiscoverCollectionTitle>{collection.coll_name}</DiscoverCollectionTitle>
     </DiscoverDiv>
@@ -117,6 +178,21 @@ const ModalDescriptionBox = ({collection}) => (
     </FollowersDiv>
     <ModalCollectionTitle>{collection.coll_name}</ModalCollectionTitle>
     <CollectionDescription>{collection.coll_description}</CollectionDescription>
+    <UserInfoDiv>
+      <UserImageWrapper>
+        <UserImage src={collection.user_img_url}></UserImage>
+      </UserImageWrapper>
+      <UserSpecs>
+        <DiscoverAndUserText user>{collection.user_creator}</DiscoverAndUserText>
+        <UserIconWrapper>
+          <UserIcon></UserIcon>
+          <UserIcon right></UserIcon>
+          <UserFollowerAndReviewCount>{collection.user_followers}</UserFollowerAndReviewCount>
+          <StarIcon></StarIcon>
+          <UserFollowerAndReviewCount>{collection.user_followers}</UserFollowerAndReviewCount>
+        </UserIconWrapper>
+      </UserSpecs>
+    </UserInfoDiv>
   </CollectionInfoBox>
 );
 

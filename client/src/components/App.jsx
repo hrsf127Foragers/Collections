@@ -133,7 +133,9 @@ class App extends React.Component {
       <Main>
         <Title>Collections Including {this.state.restaurantName}</Title>
         <CollectionList state={this.state} nextFive={this.getNextFiveCollections} previousFive={this.getPreviousFiveCollections} getRestaurants={this.updateRestaurantState}/>
+        {this.state.displayModal &&
         <Modal state={this.state} close={this.closeModal}/>
+        }
       </Main>
     );
   }

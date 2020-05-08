@@ -21,7 +21,7 @@ const ModalContainer = styled.div`
   top: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
-  display: ${props => props.show ? 'flex' : 'none'};
+  display: flex;
   position: absolute;
   justify-content: center;
   flex-direction: column;
@@ -69,7 +69,7 @@ const CloseIcon = styled(Close)`
 `;
 
 const Modal = (props) => (
-    <ModalContainer show={props.state.displayModal}>
+    <ModalContainer>
       <CloseContainer>
         <CloseButton onClick={props.close}>
           Close

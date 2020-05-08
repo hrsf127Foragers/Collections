@@ -77,7 +77,6 @@ const ModalBookmarkIcon = styled(Bookmark)`
 const ModalGallery = ({collection}) => (
   <ImageContainer>
     {[0, 1, 2, 3, 4].map(num => {
-      debugger;
       if (num === 4) {
         return (
           <OverlayContainer>
