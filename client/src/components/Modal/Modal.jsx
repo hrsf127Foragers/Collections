@@ -11,16 +11,9 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import ModalGallery from './ModalGallery.jsx';
+import {ModalGallery} from './ModalGallery.jsx';
+import ModalDescriptionBox from './ModalDescriptionBox.jsx';
 import {Close} from '@styled-icons/material/Close';
-
-const testImages = [
-  'https://loremflickr.com/218/218/food?random=1',
-  'https://loremflickr.com/218/218/food?random=2',
-  'https://loremflickr.com/218/218/food?random=3',
-  'https://loremflickr.com/218/218/food?random=4',
-  'https://loremflickr.com/218/218/food?random=5'
-];
 
 const ModalContainer = styled.div`
   width: 100%;
@@ -76,17 +69,18 @@ const CloseIcon = styled(Close)`
 `;
 
 const Modal = (props) => (
-  <ModalContainer show={props.state.displayModal}>
-    <CloseContainer>
-      <CloseButton onClick={props.close}>
-        Close
-        <CloseIcon></CloseIcon>
-      </CloseButton>
-    </CloseContainer>
-    <ModalBox>
-      <ModalGallery images={testImages}/>
-    </ModalBox>
-  </ModalContainer>
+    <ModalContainer show={props.state.displayModal}>
+      <CloseContainer>
+        <CloseButton onClick={props.close}>
+          Close
+          <CloseIcon></CloseIcon>
+        </CloseButton>
+      </CloseContainer>
+      <ModalBox>
+        <ModalGallery collection={props.state.currentCollection}/>
+        <ModalDescriptionBox collection={props.state.currentCollection}/>
+      </ModalBox>
+    </ModalContainer>
 );
 
 export default Modal;

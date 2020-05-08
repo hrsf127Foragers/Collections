@@ -14,7 +14,7 @@ module.exports = {
   randomNumberGenerator: function(min, max) {
     return Math.floor((Math.random() * (max - min)) + min);
   },
-  generateRestaurant: function(food, city) {
+  generateRestaurant: function(food, city, i) {
     let randomName = casual.first_name;
     let randomFoodType = food || foodTypes[this.randomNumberGenerator(0, foodTypes.length)];
     let randomStoreType = storeTypes[this.randomNumberGenerator(0, storeTypes.length)];
@@ -22,7 +22,7 @@ module.exports = {
     let randomCity = city || casual.city;
     let randomNumReviews = this.randomNumberGenerator(10, 101);
     let randomPrice = this.randomNumberGenerator(1, 4);
-    let randomImg = 'https://loremflickr.com/90/90/food';
+    let randomImg = `https://loremflickr.com/90/90/food?lock=${i}`;
 
     return {
       name: `${randomName}'s ${randomFoodType} ${randomStoreType}`,
@@ -35,7 +35,7 @@ module.exports = {
     };
   },
   // Create collection-generating function
-  generateCollection: function(restaurant, food) {
+  generateCollection: function(restaurant, food, i) {
     let foodType = food || restaurant.type
     let randomAdjective = adjectives[this.randomNumberGenerator(0, adjectives.length)];
     let randomUser = casual.full_name;
@@ -43,9 +43,10 @@ module.exports = {
     let randomDate = casual.date(format = 'MMMM Do YYYY');
     let userFollowers = this.randomNumberGenerator(0, 1000);
     let userRatings = this.randomNumberGenerator(0, 1000);
-    let userImg = 'https://loremflickr.com/30/30/person?random=1';
-    let coverImg = 'https://loremflickr.com/218/218/food?random=1';
+    let userImg = `https://loremflickr.com/30/30/person?lock=${i}`;
+    let coverImg = `https://loremflickr.com/218/218/food?lock=${i}`;
     let numRestaurants = this.randomNumberGenerator(10, 51);
+    let description = casual.text.slice(0, 255);
 
     return {
       name: `${randomAdjective} ${foodType} in ${restaurant.city}`,
@@ -58,7 +59,8 @@ module.exports = {
       type: foodType,
       userImage: userImg,
       coverImage: coverImg,
-      restCount: numRestaurants
+      restCount: numRestaurants,
+      coll_description: description
     };
   }
 };

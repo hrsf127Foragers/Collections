@@ -108,13 +108,13 @@ const CollectionList = (props) => {
     <CollectionListWrapper >
       <FirstFiveCollections stage={props.state.stage}>
         {firstFive.map((collection, i) => {
-          return <CollectionItem toggleModal={props.toggleModal} collection={collection} i={i}/>
+          return <CollectionItem getRestaurants={props.getRestaurants} collection={collection} i={i}/>
         })}
       </FirstFiveCollections>
       {nextFive &&
       <LastFiveCollections stage={props.state.stage}>
         {nextFive.map((collection, i) => {
-          return <CollectionItem toggleModal={props.toggleModal} collection={collection} i={i + 5}/>
+          return <CollectionItem getRestaurants={props.getRestaurants} collection={collection} i={i + 5}/>
         })}
       </LastFiveCollections>
       }
