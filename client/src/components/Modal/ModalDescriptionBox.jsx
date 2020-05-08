@@ -223,7 +223,7 @@ const ModalDescriptionBox = ({collection}) => (
           <UserIcon right></UserIcon>
           <UserFollowerAndReviewCount>{collection.user_followers}</UserFollowerAndReviewCount>
           <StarIcon></StarIcon>
-          <UserFollowerAndReviewCount>{collection.user_followers}</UserFollowerAndReviewCount>
+          <UserFollowerAndReviewCount>{collection.user_ratings}</UserFollowerAndReviewCount>
         </UserIconWrapper>
       </UserSpecs>
     </UserInfoDiv>

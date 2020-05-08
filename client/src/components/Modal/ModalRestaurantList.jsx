@@ -54,6 +54,7 @@ const SortedByArrow = styled(DownArrow)`
   margin-left: 4px;
 `;
 
+
 class ModalRestaurantList extends React.Component {
   constructor(props) {
     super(props);
