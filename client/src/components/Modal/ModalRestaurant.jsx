@@ -14,6 +14,7 @@ import styled from 'styled-components';
 const RestaurantWrapper = styled.div`
   width: 100%;
   height: 144px;
+  position: relative;
   padding: 18px 0;
   border-top: ${props => props.first ? '1px solid #e6e6e6' : 'none'};
   border-bottom: 1px solid #e6e6e6;
@@ -23,9 +24,41 @@ const RestaurantWrapper = styled.div`
   margin: 0;
 `;
 
+// child 1 of restaurant wrapper
+const RestaurantInfoContainer = styled.div`
+  width: 70%;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+`;
+
+// child 1 of restaurantinfocontainer
+const RestaurantImageContainer = styled.div`
+  width: 90px;
+  height: 90px;
+  margin: 0;
+  position: relative;
+`;
+
+const RestaurantImage = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  border-radius: 3px;
+`;
+
+// child 2 of restaurantinfocontainer
+const RestaurantSpecsContainer = styled.div`
+
+`;
+
 const ModalRestaurant = (props) => (
   <RestaurantWrapper first={props.i === 0 ? true : false}>
-
+    <RestaurantInfoContainer>
+      <RestaurantImageContainer>
+        <RestaurantImage src={props.restaurant.img_url} />
+      </RestaurantImageContainer>
+    </RestaurantInfoContainer>
   </RestaurantWrapper>
 );
 
