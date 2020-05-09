@@ -11,6 +11,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {StarFull} from '@styled-icons/icomoon/StarFull';
+import {DotSingle} from '@styled-icons/entypo/DotSingle';
+import {Bookmark} from '@styled-icons/feather/Bookmark';
+import {DownArrow} from '@styled-icons/boxicons-solid/DownArrow';
 
 const RestaurantWrapper = styled.div`
   width: 100%;
@@ -25,7 +28,7 @@ const RestaurantWrapper = styled.div`
   margin: 0;
 `;
 
-// child 1 of restaurant wrapper
+// Child 1 of Restaurant Wrapper
 const RestaurantInfoContainer = styled.div`
   width: 70%;
   height: 90px;
@@ -35,7 +38,7 @@ const RestaurantInfoContainer = styled.div`
   position: relative;
 `;
 
-// child 1 of restaurantinfocontainer
+// Child 1 of Restaurant Info Container
 const RestaurantImageContainer = styled.div`
   width: 90px;
   height: 100%;
@@ -50,13 +53,14 @@ const RestaurantImage = styled.img`
   border-radius: 3px;
 `;
 
-// child 2 of restaurantinfocontainer
+// Child 2 of Restaurant Info Container
 const RestaurantSpecsContainer = styled.div`
   font-family: inherit;
   margin-left: 10px;
   display: block;
 `;
 
+// Child 1 of Restaurant Specs Container
 const RestaurantTitle = styled.span`
   font-family: inherit;
   font-size: 14px;
@@ -68,6 +72,7 @@ const RestaurantTitle = styled.span`
   cursor: pointer;
 `;
 
+// Child 2 of Restaurant Specs Container
 const ReviewWrapper = styled.div`
   height: 18px;
   width: 100%;
@@ -92,7 +97,7 @@ const FourStarWrapper = styled.div`
   height: 18px;
   position: relative;
   border-radius: 3px;
-  background-color: ${props => props.fill ? '#ff523d' : '#ccc'};
+  background-color: ${props => props.fillColor ? '#ff523d' : '#ccc'};
   margin-left: ${props => props.first ? '0' : '2px'};
 `;
 
@@ -102,7 +107,7 @@ const ThreeStarWrapper = styled.div`
   position: relative;
   border-radius: 3px;
   background-color: #f43939;
-  background-color: ${props => props.fill ? '#ff7e42' : '#ccc'};
+  background-color: ${props => props.fillColor ? '#ff7e42' : '#ccc'};
   margin-left: ${props => props.first ? '0' : '2px'};
 `;
 
@@ -115,44 +120,200 @@ const RestaurantStarIcon = styled(StarFull)`
   color: white;
 `;
 
-// 3 stars: #ff7e42
-// 4 stars: #ff523d
-// 5 stars: #f43939
+const RestaurantReviewCount = styled.span`
+  height: 100%;
+  margin-left: 6px;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  color: #666;
+`;
 
-const ModalRestaurant = (props) => (
-  <RestaurantWrapper first={props.i === 0 ? true : false}>
-    <RestaurantInfoContainer>
-      <RestaurantImageContainer>
-        <RestaurantImage src={props.restaurant.img_url} />
-      </RestaurantImageContainer>
-      <RestaurantSpecsContainer>
-        <RestaurantTitle>{props.restaurant.rest_name}</RestaurantTitle>
-        <ReviewWrapper>
-          {[1, 2, 3, 4, 5].map(num => {
-            if (props.restaurant.rating === 5) {
-              return (
-                <FiveStarWrapper first={num === 1}>
-                  <RestaurantStarIcon></RestaurantStarIcon>
-                </FiveStarWrapper>
-              );
-            } else if (props.restaurant.rating === 4) {
-              return (
-                <FourStarWrapper first={num === 1} fill={num <= props.restaurant.rating}>
-                  <RestaurantStarIcon></RestaurantStarIcon>
-                </FourStarWrapper>
-              );
-            } else {
-              return (
-                <ThreeStarWrapper first={num === 1} fill={num <= props.restaurant.rating}>
-                  <RestaurantStarIcon></RestaurantStarIcon>
-                </ThreeStarWrapper>
-              );
-            }
-          })}
-        </ReviewWrapper>
-      </RestaurantSpecsContainer>
-    </RestaurantInfoContainer>
-  </RestaurantWrapper>
-);
+// Child 3 of Restaurant Specs Container
+const PriceAndTypeWrapper = styled.div`
+  width: 100%;
+  margin-top: 6px;
+  height: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  position: relative;
+`;
+
+const PriceAndTypeText = styled.span`
+  height: 100%;
+  font-family: inherit;
+  font-size: 12px;
+  color: ${props => props.type ? '#0073bb' : '#333'};
+  font-weight: 400;
+  margin-left: ${props => props.type ? '4px' : 'none'};;
+  &:hover {
+    text-decoration: ${props => props.type ? 'underline' : 'none'};
+  };
+  cursor: ${props => props.type ? 'pointer' : 'none'};
+`;
+
+const DotIcon = styled(DotSingle)`
+  margin-left: 4px;
+  height: 10px;
+  width: 10px;
+  align-self: center;
+  color: #999;
+`;
+
+const RestaurantLocationWrapper = styled.div`
+  height: 16px;
+  margin-top: 2px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+`;
+
+const RestaurantLocation = styled.span`
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  color: #333;
+`;
+
+// Child 2 of Restaurant Wrapper
+// Bookmark Icon
+// Create a div for it
+const BookmarkBubbleWrap = styled.div`
+  width: 30%;
+  height: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+`;
+
+const BookmarkWrapper = styled.div`
+  height: 35px;
+  width: 23px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
+const RestaurantBookmark = styled(Bookmark)`
+  width: 23px;
+  height: 35px;
+  &:hover {
+    fill: red;
+    color: red;
+  }
+  cursor: pointer;
+`;
+// make a div
+// has a p and the arrow icon
+// display none
+const SaveBubbleWrapper = styled.div`
+  width: 40px;
+  height: 35px;
+  position: absolute;
+  top: 15px;
+  right: -7px;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  ${BookmarkWrapper}:hover & {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+  const SaveBubble = styled.div`
+  width: 40px;
+  height: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  border-radius: 4px;
+  background-color: #333;
+  ${RestaurantBookmark}:hover & {
+    background-color: red;
+  }
+`;
+
+const BubbleText = styled.span`
+  color: white;
+  font-size: 12px;
+  font-family: inherit;
+  font-weight: 700;
+`;
+
+const SaveArrow = styled(DownArrow)`
+  width: 10px;
+  height: 10px;
+  color: #333;
+  margin: 0;
+  position: absolute;
+  top: 27px;
+`;
+
+const ModalRestaurant = (props) => {
+  const reviewStars = [1, 2, 3, 4, 5].map(num => {
+    if (props.restaurant.rating === 5) {
+      return (
+        <FiveStarWrapper first={num === 1}>
+          <RestaurantStarIcon></RestaurantStarIcon>
+        </FiveStarWrapper>
+      );
+    } else if (props.restaurant.rating === 4) {
+      return (
+        <FourStarWrapper first={num === 1} fillColor={num <= props.restaurant.rating}>
+          <RestaurantStarIcon></RestaurantStarIcon>
+        </FourStarWrapper>
+      );
+    } else {
+      return (
+        <ThreeStarWrapper first={num === 1} fillColor={num <= props.restaurant.rating}>
+          <RestaurantStarIcon></RestaurantStarIcon>
+        </ThreeStarWrapper>
+      );
+    }
+  });
+
+  let dollarSigns = '';
+  for (let i = 0; i < props.restaurant.price_range; i++) {
+    dollarSigns += '$';
+  };
+
+  return (
+    <RestaurantWrapper first={props.i === 0 ? true : false}>
+      <RestaurantInfoContainer>
+        <RestaurantImageContainer>
+          <RestaurantImage src={props.restaurant.img_url} />
+        </RestaurantImageContainer>
+        <RestaurantSpecsContainer>
+          <RestaurantTitle>{props.restaurant.rest_name}</RestaurantTitle>
+          <ReviewWrapper>
+            {reviewStars}
+            <RestaurantReviewCount>{props.restaurant.num_reviews} reviews</RestaurantReviewCount>
+          </ReviewWrapper>
+          <PriceAndTypeWrapper>
+            <PriceAndTypeText>{dollarSigns}</PriceAndTypeText>
+            <DotIcon></DotIcon>
+            <PriceAndTypeText type>{props.restaurant.food_type}</PriceAndTypeText>
+          </PriceAndTypeWrapper>
+          <RestaurantLocationWrapper>
+            <RestaurantLocation>{props.restaurant.city}</RestaurantLocation>
+          </RestaurantLocationWrapper>
+        </RestaurantSpecsContainer>
+      </RestaurantInfoContainer>
+      <BookmarkBubbleWrap>
+        <BookmarkWrapper>
+          <SaveBubbleWrapper>
+            <SaveBubble><BubbleText>Save</BubbleText></SaveBubble>
+            <SaveArrow></SaveArrow>
+          </SaveBubbleWrapper>
+          <RestaurantBookmark></RestaurantBookmark>
+        </BookmarkWrapper>
+      </BookmarkBubbleWrap>
+    </RestaurantWrapper>
+  );
+};
 
 export default ModalRestaurant;
