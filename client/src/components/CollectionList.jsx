@@ -16,31 +16,29 @@ const SlideOutLeft = keyframes`${slideOutLeft}`;
 
 const CollectionListWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   position: relative;
-  width: 1174px;
+  width: 1170px;
   height: auto;
   margin: auto;
+  flex-wrap: nowrap;
 `;
 
-const FirstFiveCollections = styled.div`
+const CollectionCarousel = styled.div`
   width: 1144px;
   height: 302px;
   padding: 0px 48px 48px 0px;
   margin: 0px auto 48px auto;
-  display: ${props => props.stage % 2 === 0 ? 'grid' : 'none'};
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  animation: 1s ${SlideInLeft};
-`;
-
-const LastFiveCollections = styled.div`
-  width: 1144px;
-  height: 302px;
-  padding: 0px 48px 48px 0px;
-  margin: 0px auto 48px auto;
-  display: ${props => props.stage === 1 ? 'grid' : 'none'};
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  overflow: hidden;
-  animation: 1s ${SlideInRight};
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const NextButton = styled.div`
@@ -56,7 +54,7 @@ const NextButton = styled.div`
   top: 130px;
   &:hover {
     box-shadow: none;
-  }
+  };
 `;
 
 const NextArrowIcon = styled(KeyboardArrowRight)`
@@ -84,7 +82,7 @@ const BackButton = styled.div`
   right: 1160px;
   &:hover {
     box-shadow: none;
-  }
+  };
 `;
 
 const BackArrowIcon = styled(KeyboardArrowLeft)`
@@ -99,32 +97,38 @@ fill: #757280;
 }
 `;
 
-
 const CollectionList = (props) => {
-  const firstFive = props.state.collectionList.slice(0, 5);
-  const nextFive = props.state.collectionList.slice(5, 10);
+
+  var haveScrolled = false;
+
+  const scrollLeft = () => {
+    const styledID = CollectionCarousel.styledComponentId;
+    const divToScroll = document.getElementsByClassName(styledID);
+    divToScroll[0].scrollLeft += 1000;
+    haveScrolled = true;
+  };
+
+  const scrollRight = () => {
+    const styledID = CollectionCarousel.styledComponentId;
+    const divToScroll = document.getElementsByClassName(styledID);
+    divToScroll[0].scrollLeft -= 1000;
+    haveScrolled = false;
+  };
 
   return (
     <CollectionListWrapper >
-      <FirstFiveCollections stage={props.state.stage}>
-        {firstFive.map((collection, i) => {
+      <CollectionCarousel>
+        {props.state.collectionList.map((collection, i) => {
           return <CollectionItem getRestaurants={props.getRestaurants} collection={collection} i={i}/>
         })}
-      </FirstFiveCollections>
-      {nextFive &&
-      <LastFiveCollections stage={props.state.stage}>
-        {nextFive.map((collection, i) => {
-          return <CollectionItem getRestaurants={props.getRestaurants} collection={collection} i={i + 5}/>
-        })}
-      </LastFiveCollections>
-      }
-      {props.state.stage % 2 === 0 && nextFive.length > 0 &&
-      <NextButton onClick={props.nextFive}>
+      </CollectionCarousel>
+      {props.state.collectionList.length > 5 && !haveScrolled &&
+      <NextButton onClick={scrollLeft} haveScrolled={haveScrolled}>
         <NextArrowIcon></NextArrowIcon>
       </NextButton>
       }
-      {props.state.stage === 1 &&
-      <BackButton onClick={props.previousFive}>
+      {haveScrolled &&
+      <BackButton onClick={scrollRight} haveScrolled={haveScrolled}>
         <BackArrowIcon></BackArrowIcon>
       </BackButton>
       }
