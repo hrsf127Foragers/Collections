@@ -97,43 +97,62 @@ fill: #757280;
 }
 `;
 
-const CollectionList = (props) => {
+class CollectionList extends React.Component {
+  constructor(props) {
+    super(props);
 
-  var haveScrolled = false;
+    this.state = {
+      scrollDistance: 0
+    }
 
-  const scrollLeft = () => {
+    this.scrollLeft = this.scrollLeft.bind(this);
+    this.scrollRight = this.scrollRight.bind(this);
+  };
+
+  scrollLeft() {
     const styledID = CollectionCarousel.styledComponentId;
     const divToScroll = document.getElementsByClassName(styledID);
     divToScroll[0].scrollLeft += 1000;
-    haveScrolled = true;
+    this.state.scrollDistance += 1000;
+    this.setState({
+      haveScrolled: this.state.scrollDistance
+    });
   };
 
-  const scrollRight = () => {
+  scrollRight() {
     const styledID = CollectionCarousel.styledComponentId;
     const divToScroll = document.getElementsByClassName(styledID);
     divToScroll[0].scrollLeft -= 1000;
-    haveScrolled = false;
+    this.state.scrollDistance -= 1000;
+    this.setState({
+      haveScrolled: this.state.scrollDistance
+    });
   };
 
-  return (
-    <CollectionListWrapper >
-      <CollectionCarousel>
-        {props.state.collectionList.map((collection, i) => {
-          return <CollectionItem getRestaurants={props.getRestaurants} collection={collection} i={i}/>
-        })}
-      </CollectionCarousel>
-      {props.state.collectionList.length > 5 && !haveScrolled &&
-      <NextButton onClick={scrollLeft} haveScrolled={haveScrolled}>
-        <NextArrowIcon></NextArrowIcon>
-      </NextButton>
-      }
-      {haveScrolled &&
-      <BackButton onClick={scrollRight} haveScrolled={haveScrolled}>
-        <BackArrowIcon></BackArrowIcon>
-      </BackButton>
-      }
-    </CollectionListWrapper>
-  );
+  render() {
+
+    var collectionCarousel = this.props.state.collectionList.map((collection, i) => {
+      return <CollectionItem getRestaurants={this.props.getRestaurants} collection={collection} i={i}/>
+    });
+
+    return (
+      <CollectionListWrapper >
+        <CollectionCarousel>
+          {collectionCarousel}
+        </CollectionCarousel>
+        {this.props.state.collectionList.length > 5 && this.state.scrollDistance === 0 &&
+        <NextButton onClick={this.scrollLeft}>
+          <NextArrowIcon></NextArrowIcon>
+        </NextButton>
+        }
+        {this.state.scrollDistance !== 0 &&
+        <BackButton onClick={this.scrollRight}>
+          <BackArrowIcon></BackArrowIcon>
+        </BackButton>
+        }
+      </CollectionListWrapper>
+    );
+  }
 
 };
 
