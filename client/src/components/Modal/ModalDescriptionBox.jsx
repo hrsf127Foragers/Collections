@@ -45,7 +45,6 @@ const DiscoverDiv = styled.div`
   font-size: 14px;
   cursor: pointer;
   margin-left: ${props => props.user ? '7px' : '0'};
-
 `;
 
 const DiscoverNextArrow = styled(KeyboardArrowRight)`

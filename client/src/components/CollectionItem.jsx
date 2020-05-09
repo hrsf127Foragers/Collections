@@ -2,6 +2,12 @@ import React from 'react';
 import styled from 'styled-components';
 import {Bookmark} from '@styled-icons/boxicons-solid/Bookmark';
 
+const Collection = styled.div`
+  width: 218px;
+  height: 100%;
+  margin-right: 16px;
+`;
+
 const CollectionTitle = styled.p`
   font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
   font-size: ${props => props.secondary ? '14px' : '16px'};
@@ -11,13 +17,6 @@ const CollectionTitle = styled.p`
   width: 218px;
   line-height: 22px;
   cursor: pointer;
-`;
-
-const Collection = styled.div`
-  width: 100%;
-  height: 100%;
-  margin-right: 16px;
-  margin-bottom: 16px;
 `;
 
 const ImageContainer = styled.div`
