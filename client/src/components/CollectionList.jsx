@@ -79,7 +79,7 @@ const BackButton = styled.div`
   position: absolute;
   cursor: pointer;
   top: 130px;
-  right: 1160px;
+  left: 3px;
   &:hover {
     box-shadow: none;
   };
@@ -112,8 +112,8 @@ class CollectionList extends React.Component {
   scrollLeft() {
     const styledID = CollectionCarousel.styledComponentId;
     const divToScroll = document.getElementsByClassName(styledID);
-    divToScroll[0].scrollLeft += 1000;
-    this.state.scrollDistance += 1000;
+    divToScroll[0].scrollLeft += 1400;
+    this.state.scrollDistance += 1400;
     this.setState({
       haveScrolled: this.state.scrollDistance
     });
@@ -122,8 +122,8 @@ class CollectionList extends React.Component {
   scrollRight() {
     const styledID = CollectionCarousel.styledComponentId;
     const divToScroll = document.getElementsByClassName(styledID);
-    divToScroll[0].scrollLeft -= 1000;
-    this.state.scrollDistance -= 1000;
+    divToScroll[0].scrollLeft -= 1400;
+    this.state.scrollDistance -= 1400;
     this.setState({
       haveScrolled: this.state.scrollDistance
     });
