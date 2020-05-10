@@ -109,6 +109,8 @@ class ModalRestaurantList extends React.Component {
       currentSelection: 'Recently Added'
     };
 
+    this.restaurantHolder = this.props.state.restaurantList.slice();
+
     this.toggleDropDown = this.toggleDropDown.bind(this);
     this.sortRestaurants = this.sortRestaurants.bind(this);
   }
@@ -125,10 +127,39 @@ class ModalRestaurantList extends React.Component {
   // currently selected value updated in state
   // SortedByCurrentSelection text will reflect change
   sortRestaurants(string) {
-    this.setState({
-      currentSelection: string,
-      showDropDown: false
-    });
+    if (string === this.currentSelection) {
+      this.restaurantHolder = this.restaurantHolder;
+      return;
+    }
+
+    if (string === 'Name') {
+      this.restaurantHolder = this.state.restaurants.slice();
+
+      this.state.restaurants.sort((a, b) => {
+        var nameA = a.rest_name.toLowerCase(), nameB = b.rest_name.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        } else if (nameA > nameB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.setState({
+        restaurants: this.state.restaurants,
+        currentSelection: string,
+        showDropDown: false
+      });
+
+    } else {
+      this.setState({
+        restaurants: this.restaurantHolder,
+        currentSelection: string,
+        showDropDown: false
+      });
+    }
+
   }
 
   render() {
