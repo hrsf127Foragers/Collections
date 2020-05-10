@@ -40,7 +40,8 @@ module.exports = {
     let randomAdjective = adjectives[this.randomNumberGenerator(0, adjectives.length)];
     let randomUser = casual.full_name;
     let collectionFollowers = this.randomNumberGenerator(0, 1000);
-    let randomDate = casual.date(format = 'MMMM Do YYYY');
+    let randomDate = casual.date(format = 'M/D');
+    let randomYear = this.randomNumberGenerator(2004, 2021);
     let userFollowers = this.randomNumberGenerator(0, 1000);
     let userRatings = this.randomNumberGenerator(0, 1000);
     let userImg = `https://loremflickr.com/30/30/person?lock=${i}`;
@@ -52,7 +53,7 @@ module.exports = {
       name: `${randomAdjective} ${foodType} in ${restaurant.city}`,
       creator: randomUser,
       coll_followers: collectionFollowers,
-      last_update: randomDate,
+      last_update: `${randomDate}/${randomYear}`,
       user_followers: userFollowers,
       user_ratings: userRatings,
       city: restaurant.city,
