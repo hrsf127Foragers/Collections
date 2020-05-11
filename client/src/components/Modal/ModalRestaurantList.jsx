@@ -32,6 +32,49 @@ const SortedByDropDown = styled.div`
   color: #666;
   font-size: 14px;
   margin: 0;
+  cursor: pointer;
+  position: relative;
+`;
+
+const SortedByHiddenMenu = styled.div`
+  position: absolute;
+  width: 33%;
+  height: 55px;
+  z-index: 1;
+  border-radius: 2px;
+  background-color: white;
+  display; flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-shadow: 0 2px 8px rgba(0,0,0,.2);
+`;
+
+const SortOptionsList = styled.ul`
+  width: 100%;
+  padding: 0;
+  margin: 5px 0;
+  height: 85%;
+  background-color: #fff;
+  list-style: none;
+  position: relative;
+`;
+
+const IndividualSortOption = styled.li`
+  width: 100%;
+  height: 50%;
+  margin: 0;
+  font-family: inherit;
+  font-weight: 400;
+  font-size 14px;
+  color: #666;
+  background-color: #fff;
+  &:hover {
+    color: #fff;
+    background-color: #666;
+  };
+  cursor: pointer;
+  padding-left: 10px;
+  box-sizing: border-box;
 `;
 
 const SortedByPrefix = styled.span`
@@ -61,8 +104,61 @@ class ModalRestaurantList extends React.Component {
 
     this.state = {
       restaurants: this.props.state.restaurantList,
-      collection: this.props.state.currentCollection
+      collection: this.props.state.currentCollection,
+      showDropDown: false,
+      currentSelection: 'Recently Added'
     };
+
+    this.restaurantHolder = this.props.state.restaurantList.slice();
+
+    this.toggleDropDown = this.toggleDropDown.bind(this);
+    this.sortRestaurants = this.sortRestaurants.bind(this);
+  }
+
+  toggleDropDown() {
+    this.setState({
+      showDropDown: !this.state.showDropDown
+    });
+  }
+  // unordered list
+  // select function
+  // when one is selected, event target value passed here
+  // list rearranged
+  // currently selected value updated in state
+  // SortedByCurrentSelection text will reflect change
+  sortRestaurants(string) {
+    if (string === this.currentSelection) {
+      this.restaurantHolder = this.restaurantHolder;
+      return;
+    }
+
+    if (string === 'Name') {
+      this.restaurantHolder = this.state.restaurants.slice();
+
+      this.state.restaurants.sort((a, b) => {
+        var nameA = a.rest_name.toLowerCase(), nameB = b.rest_name.toLowerCase();
+        if (nameA < nameB) {
+          return -1;
+        } else if (nameA > nameB) {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      this.setState({
+        restaurants: this.state.restaurants,
+        currentSelection: string,
+        showDropDown: false
+      });
+
+    } else {
+      this.setState({
+        restaurants: this.restaurantHolder,
+        currentSelection: string,
+        showDropDown: false
+      });
+    }
 
   }
 
@@ -74,11 +170,19 @@ class ModalRestaurantList extends React.Component {
     return (
       <RestaurantListContainer>
         <NumberPlaces>{this.state.collection.rest_count} Places</NumberPlaces>
-        <SortedByDropDown>
+        <SortedByDropDown onClick={this.toggleDropDown}>
           <SortedByPrefix>Sort By</SortedByPrefix>
-          <SortedByCurrentSelection>Recently Added</SortedByCurrentSelection>
+          <SortedByCurrentSelection>{this.state.currentSelection}</SortedByCurrentSelection>
           <SortedByArrow></SortedByArrow>
         </SortedByDropDown>
+        {this.state.showDropDown &&
+        <SortedByHiddenMenu>
+          <SortOptionsList>
+            <IndividualSortOption onClick={() => {this.sortRestaurants("Recently Added")}}>Recently Added</IndividualSortOption>
+            <IndividualSortOption onClick={() => {this.sortRestaurants("Name")}}>Name</IndividualSortOption>
+          </SortOptionsList>
+        </SortedByHiddenMenu>
+        }
         {mappedRestaurants}
       </RestaurantListContainer>
     );
