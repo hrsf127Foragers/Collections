@@ -10,7 +10,7 @@ const RestaurantListContainer = styled.div`
   margin: 36px auto;
   width: 633px;
   display: block;
-  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   position: relative;
 `;
 

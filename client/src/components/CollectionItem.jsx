@@ -45,7 +45,7 @@ const PhotoOverlay = styled.p`
   margin: 0px;
   text-align: center;
   justify-self: end;
-  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   border-radius: 0px 0px 4px 0px;
   content-align: center;
   display: grid;

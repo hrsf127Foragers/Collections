@@ -13,7 +13,7 @@ const Main = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-family: Open Sans, Helvetica Neue, Helvetica, Arial, sans-serif;
   font-size: 20px;
   font-weight: 700;
   color: #2b273c;

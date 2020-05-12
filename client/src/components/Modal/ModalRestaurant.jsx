@@ -26,6 +26,7 @@ const RestaurantWrapper = styled.div`
   flex-direction: row;
   justify-content: space-between;
   margin: 0;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 `;
 
 // Child 1 of Restaurant Wrapper

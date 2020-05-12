@@ -19,7 +19,7 @@ const CollectionInfoBox = styled.div`
   width: 633px;
   height: 305px;
   position: relative;
-  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
 `;
 
 const DiscoverDiv = styled.div`

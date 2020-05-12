@@ -55,7 +55,7 @@ const CloseButton = styled.a`
   font-weight: 400;
   font-size: 14px;
   text-align: right;
-  font-family: Open Sans,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif;
   color: white;
   cursor: pointer;
   &:hover {
