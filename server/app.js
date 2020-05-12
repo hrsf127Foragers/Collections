@@ -7,6 +7,11 @@ const models = require('../database/models.js');
 
 app.use(morgan('tiny'));
 
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', 'http://localhost:8000');
+  next();
+});
+
 app.listen(port, () => {console.log(`Server is listening at http://localhost:${port}/`)});
 
 app.use(express.static(__dirname + '/../client/public/dist'));

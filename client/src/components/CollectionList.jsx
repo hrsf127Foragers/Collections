@@ -132,11 +132,11 @@ class CollectionList extends React.Component {
   render() {
 
     var collectionCarousel = this.props.state.collectionList.map((collection, i) => {
-      return <CollectionItem getRestaurants={this.props.getRestaurants} collection={collection} i={i}/>
+      return <CollectionItem key={i} getRestaurants={this.props.getRestaurants} collection={collection} i={i}/>
     });
 
     return (
-      <CollectionListWrapper >
+      <CollectionListWrapper>
         <CollectionCarousel>
           {collectionCarousel}
         </CollectionCarousel>

@@ -8,7 +8,6 @@ const Main = styled.div`
   width: 100%;
   height: 100%;
   margin: auto;
-  position: absolute;
   top: 0;
   left: 0;
 `;
@@ -142,3 +141,5 @@ class App extends React.Component {
 };
 
 export default App;
+// For proxy development
+window.Collections = App;

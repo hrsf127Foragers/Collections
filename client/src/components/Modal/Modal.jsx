@@ -23,7 +23,7 @@ const ModalContainer = styled.div`
   left: 0;
   background-color: rgba(0, 0, 0, 0.7);
   display: flex;
-  position: absolute;
+  position: fixed;
   justify-content: center;
   flex-direction: column;
 `;
