@@ -127,7 +127,7 @@ class ModalRestaurantList extends React.Component {
   // currently selected value updated in state
   // SortedByCurrentSelection text will reflect change
   sortRestaurants(string) {
-    if (string === this.currentSelection) {
+    if (string === this.state.currentSelection) {
       this.restaurantHolder = this.restaurantHolder;
       return;
     }

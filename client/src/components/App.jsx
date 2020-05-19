@@ -61,7 +61,7 @@ class App extends React.Component {
   getCollections() {
     $.ajax({
       method: 'GET',
-      url: `http://localhost:4568/${this.state.restaurantID}/collections`,
+      url: `/${this.state.restaurantID}/collections`,
       success: (data) => {
         this.setState({
           restaurantName: data[data.length - 1],
@@ -97,7 +97,7 @@ class App extends React.Component {
   getRestaurants(collectionId, callback) {
     $.ajax({
       method: 'GET',
-      url: `http://localhost:4568/${collectionId}/restaurants`,
+      url: `/${collectionId}/restaurants`,
       success: (data) => {
         callback(data);
       },

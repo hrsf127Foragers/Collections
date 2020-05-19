@@ -286,7 +286,7 @@ const ModalRestaurant = (props) => {
     <RestaurantWrapper first={props.i === 0 ? true : false}>
       <RestaurantInfoContainer>
         <RestaurantImageContainer>
-          <RestaurantImage src={props.restaurant.img_url} />
+          <RestaurantImage alt="Restaurant item image" src={props.restaurant.img_url} />
         </RestaurantImageContainer>
         <RestaurantSpecsContainer>
           <RestaurantTitle>{props.restaurant.rest_name}</RestaurantTitle>

@@ -213,7 +213,7 @@ const ModalDescriptionBox = ({collection}) => (
     <CollectionDescription>{collection.coll_description}</CollectionDescription>
     <UserInfoDiv>
       <UserImageWrapper>
-        <UserImage src={collection.user_img_url}></UserImage>
+        <UserImage alt="User profile picture" src={collection.user_img_url}></UserImage>
       </UserImageWrapper>
       <UserSpecs>
         <DiscoverAndUserText user>{collection.user_creator}</DiscoverAndUserText>

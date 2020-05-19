@@ -80,7 +80,7 @@ const ModalGallery = ({collection}) => (
       if (num === 4) {
         return (
           <OverlayContainer>
-            <BottomRightImage src={`${collection.coll_img_url}${num}`}/>
+            <BottomRightImage alt="Bottom right gallery image" src={`${collection.coll_img_url}${num}`}/>
             <CornerImageOverlay>
               <ModalBookmarkIcon></ModalBookmarkIcon>
               <CollectionCount>{collection.rest_count}</CollectionCount>
@@ -88,7 +88,7 @@ const ModalGallery = ({collection}) => (
           </OverlayContainer>
         );
       } else {
-        return <GalleryImage i={`square${num}`} src={`${collection.coll_img_url}${num}`}/>
+        return <GalleryImage alt="Gallery image" i={`square${num}`} src={`${collection.coll_img_url}${num}`}/>
       }
     })}
   </ImageContainer>
